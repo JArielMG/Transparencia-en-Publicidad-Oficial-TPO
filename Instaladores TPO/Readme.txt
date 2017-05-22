@@ -1,10 +1,44 @@
-Actualizaciones del modulo de TPOv1 a la fecha 01/12/2016, se corrigen algunas incidencias.
+Actualizaciones del modulo de TPOv1, se corrigen algunas incidencias.
 
-1.- Correci髇 del filtro "Montos mayores a" de la gr醘ica del  "Gasto por proveedores".
-2.- Homologaci髇 de abreviatura para cifras destacadas.
-3.- Correcci髇 del cat醠ogo de servicios_unidades.
-
-
-
-Fecha de actualizaci髇 
+Fecha de actualizaci贸n 
 09/12/2016
+
+1.- Correcci贸n del filtro "Montos mayores a" de la gr谩fica de la secci贸n  "Gasto por proveedores", la cual por default estaba asignada a una cantidad espec铆fica. Con este cambio el filtro toma el 
+
+valor promedio de todos los registros.
+
+	Se comentan las l铆neas 67, 68 y 69:
+	// else {
+           
+	// setD3D("filtro", 150000);
+
+	// }
+
+Y se agrega entre la l铆nea 122 y 125:
+
+	if (!isset($_GET['filtro'])) {
+                                   
+	setD3D('filtro', $maximo);
+
+2.- Homologaci贸n de abreviaturas "k" y "m" en las cifras destacadas referente a los montos ah铆 mostrados, en la secci贸n de "Contratos y 贸rdenes de compra". En la l铆nea 75 del archivo 
+
+"Contratos.php" ubicado en la ruta: tpov1/application/views/pages/ se cambia la letra "M" por la letra "k".
+
+	<span class="number-display"><?php echo number_format(getD3D("indicador3"),0,',',','); ?> k</span>
+
+3.- Correcci贸n del cat谩logo de "servicios_unidades" ubicado en el archivo dummydata.sql; en la tabla "cat_servicios_unidades" se borran los registros duplicados del cat谩logo. 
+
+
+Fecha de actualizaci贸n 
+09/01/2017
+
+1.- Se eliminan los archivos con extensi贸n .csv, dentro de la carpeta de tpov1-data. Estos archivos contienen la informaci贸n temporal de los registros capturados para poder mostrar los gr谩ficos en el m贸dulo front de la herramienta.
+
+
+Fecha de actualizaci贸n 
+02/02/2017
+
+1.- Se modifica el archivo structure.sql del m贸dulo del administrador, ubicado en la ruta tpoadminv1/install/system/db/. La modificaci贸n en la l铆nea de c贸digo de la tabla "vtab_presupuesto", con este cambio en el m贸dulo del sitio p煤blico en la secci贸n "Presupuesto", los registros que se visualizan en la tabla se agruparan por ejercicio y no por clave de partida al momento de filtrar por ejercicio.
+
+CREATE VIEW `vtab_presupuesto` AS select `b`.`partida` AS `partida`,`b`.`denominacion` AS `descripcion`,`d`.`ejercicio` AS  `ejercicio`,sum(`a`.`monto_presupuesto`) AS `original`,sum(`a`.`monto_modificacion`) AS `modificaciones`,(sum(`a`.`monto_presupuesto`) + sum(`a`.`monto_modificacion`)) AS `presupuesto`,ifnull((select sum(`f`.`monto_desglose`) from (`tab_facturas` `e` join `tab_facturas_desglose` `f`) where ((`e`.`active` = 1) and (`f`.`active` = 1) and (`e`.`id_factura` = `f`.`id_factura`) and (`e`.`id_presupuesto_concepto` = `a`.`id_presupuesto_concepto`))),0) AS `ejercido` from (((`tab_presupuestos_desglose` `a` join `cat_presupuesto_conceptos` `b`) join `tab_presupuestos` `c`) join `cat_ejercicios` `d`) where ((`a`.`active` = 1) and (`b`.`active` = 1) and (`c`.`active` = 1) and (`d`.`active` = 1) and (`a`.`id_presupuesto` = `c`.`id_presupuesto`) and (`a`.`id_presupuesto_concepto` = `b`.`id_presupesto_concepto`) and (`d`.`id_ejercicio` = `c`.`id_ejercicio`)) group by `d`.`ejercicio`,`b`.`denominacion`;
+  
