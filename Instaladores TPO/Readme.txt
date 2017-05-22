@@ -3,9 +3,7 @@ Actualizaciones del modulo de TPOv1, se corrigen algunas incidencias.
 Fecha de actualización 
 09/12/2016
 
-1.- Corrección del filtro "Montos mayores a" de la gráfica de la sección  "Gasto por proveedores", la cual por default estaba asignada a una cantidad específica. Con este cambio el filtro toma el 
-
-valor promedio de todos los registros.
+1.- Corrección del filtro "Montos mayores a" de la gráfica de la sección  "Gasto por proveedores", la cual por default estaba asignada a una cantidad específica. Con este cambio el filtro toma el valor promedio de todos los registros.
 
 	Se comentan las líneas 67, 68 y 69:
 	// else {
@@ -20,9 +18,7 @@ Y se agrega entre la línea 122 y 125:
                                    
 	setD3D('filtro', $maximo);
 
-2.- Homologación de abreviaturas "k" y "m" en las cifras destacadas referente a los montos ahí mostrados, en la sección de "Contratos y órdenes de compra". En la línea 75 del archivo 
-
-"Contratos.php" ubicado en la ruta: tpov1/application/views/pages/ se cambia la letra "M" por la letra "k".
+2.- Homologación de abreviaturas "k" y "m" en las cifras destacadas referente a los montos ahí mostrados, en la sección de "Contratos y órdenes de compra". En la línea 75 del archivo "Contratos.php" ubicado en la ruta: tpov1/application/views/pages/ se cambia la letra "M" por la letra "k".
 
 	<span class="number-display"><?php echo number_format(getD3D("indicador3"),0,',',','); ?> k</span>
 
