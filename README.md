@@ -1,4 +1,6 @@
-# publicidadabierta
+Transparencia en Publicidad Oficial TPO
+
+#publicidadabierta
 
 En 2015, el Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI), en colaboración con Fundar, Centro de Análisis e Investigación A.C., desarrollaron el Estándar de Datos de Comunicación Social y Publicidad Oficial (EDPO) y la herramienta Transparencia en Publicidad Oficial (TPO).
 
