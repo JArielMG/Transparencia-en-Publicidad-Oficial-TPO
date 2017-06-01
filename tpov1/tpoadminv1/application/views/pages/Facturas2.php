@@ -95,7 +95,7 @@ return false;
     $xcrud->field_tooltip('fecha_erogacion','Indica la fecha de erogación de recursos, con el formato dd/mm/aaaa (por ej. 15/08/2016).');
     $xcrud->field_tooltip('file_factura_pdf','Archivo electrónico de la factura en formato PDF.');
     $xcrud->field_tooltip('file_factura_xml','Archivo electrónico de la factura en formato XML.');
-    $xcrud->field_tooltip('active','Indica el estado de la información correspondiente al registro, “Activa” o “Inactiva”.');
+    $xcrud->field_tooltip('active','Indica el estado de la información correspondiente al registro: “Activa”, “Inactiva”, ”En proceso” o ”Pago emitido”.');
 
     $xcrud->change_type('file_factura_pdf', 'file', '', array('not_rename'=>true, 'path'=>'../data/facturas/'));
     $xcrud->change_type('file_factura_xml', 'file', '', array('not_rename'=>true, 'path'=>'../data/facturas/'));
@@ -151,7 +151,7 @@ return false;
     $detalle->field_tooltip('cantidad','Indica la cantidad del servicio o producto adquirido.');
     $detalle->field_tooltip('precio_unitarios','Indica el precio unitario del producto o servicio, con I.V.A. incluido.');
     $detalle->field_tooltip('monto_desglose','Indica el monto correspondiente al subconcepto de la factura.');
-    $detalle->field_tooltip('active','ndica el estado de la información correspondiente al registro, “Activa” o “Inactiva”.
+    $detalle->field_tooltip('active','Indica el estado de la información correspondiente al registro, “Activa” o “Inactiva”, ”En proceso” o ”Pago emitido”.
 ');
     $detalle->field_tooltip('area_administrativa','Área administrativa encargada de solicitar el servicio encargada de solicitar el servicio');
     $detalle->field_tooltip('fecha_validacion','Fecha de validación');

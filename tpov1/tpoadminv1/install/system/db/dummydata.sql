@@ -537,7 +537,9 @@ INSERT INTO `cat_trimestres` (`id_trimestre`, `trimestre`, `active`) VALUES
 /*!40000 ALTER TABLE `sys_active` DISABLE KEYS */;
 INSERT INTO `sys_active` (`id_active`, `name_active`) VALUES
 	(1, 'Activo'),
-	(2, 'Inactivo');
+	(2, 'Inactivo'),
+	(3, 'En Proceso'),
+	(4, 'Pago Emitido');
 /*!40000 ALTER TABLE `sys_active` ENABLE KEYS */;
 
 -- Volcando datos para la tabla rusiainf_inai.sys_debug: ~0 rows (aproximadamente)
