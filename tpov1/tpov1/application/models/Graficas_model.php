@@ -6,13 +6,14 @@ class Graficas_model extends CI_Model {
 	
    function leePresupuesto( $ejercicio="" ) {
    if ($ejercicio == "") {
-      $query = $this->db->query("
+     $query = $this->db->query("
 select 
 'Total' as partida, 
 'Total' as denominacion, 
 sum(a.monto_presupuesto) as monto_contrato, 
-(select sum(ejercido) from vtab_presupuesto) as monto_ejercido,
-(sum(a.monto_presupuesto) + sum(a.monto_modificacion)) as monto_total
+(select sum(z.monto_desglose) from vact_facturas as y, vact_facturas_desglose as z where y.id_factura = z.id_factura ) as monto_ejercido,".
+//(select sum(ejercido) from vtab_presupuesto) as monto_ejercido,
+"(sum(a.monto_presupuesto) + sum(a.monto_modificacion)) as monto_total
 from 
 vact_presupuestos_desglose as a,
 vact_presupuestos as c
@@ -46,13 +47,14 @@ c.active = 1 and
 a.id_presupuesto = c.id_presupuesto and
 a.id_presupuesto_concepto = b.id_presupesto_concepto
 group by b.partida, b.denominacion");
-	} else {
+  } else {
       $query = $this->db->query(" 
 select 
 'Total' as partida, 
 'Total' as denominacion, 
 sum(a.monto_presupuesto) as monto_contrato, 
-(select sum(ejercido) from vtab_presupuesto where ejercicio = '". $ejercicio . "' ) as monto_ejercido,
+(select sum(z.monto_desglose) from vact_facturas as y, vact_facturas_desglose as z, cat_ejercicios as x 
+where y.id_factura = z.id_factura and x.id_ejercicio = y.id_ejercicio and x.ejercicio = '" . $ejercicio .  "') as monto_ejercido,
 (sum(a.monto_presupuesto) + sum(a.monto_modificacion)) as monto_total
 from 
 vact_presupuestos_desglose as a,
@@ -70,8 +72,8 @@ select
 b.partida as partida, 
 b.denominacion as denominacion, 
 sum(a.monto_presupuesto) as monto_contrato, 
-(select sum(z.monto_desglose) from vact_facturas as y, vact_facturas_desglose as z where y.id_factura = z.id_factura and
-y.id_presupuesto_concepto =a.id_presupuesto_concepto) as monto_ejercido,
+(select sum(z.monto_desglose) from vact_facturas as y, vact_facturas_desglose as z, cat_ejercicios as x where y.id_factura = z.id_factura and
+y.id_presupuesto_concepto =a.id_presupuesto_concepto and x.id_ejercicio = y.id_ejercicio and x.ejercicio = '" . $ejercicio .  "') as monto_ejercido,
 (sum(a.monto_presupuesto) + sum(a.monto_modificacion)) as monto_total
 from 
 vact_presupuestos_desglose as a,
@@ -87,7 +89,7 @@ a.id_presupuesto = c.id_presupuesto and
 a.id_presupuesto_concepto = b.id_presupesto_concepto and
 d.id_ejercicio = c.id_ejercicio and
 d.ejercicio = '". $ejercicio . "' 
-group by b.partida, b.denominacion");	
+group by b.partida, b.denominacion");
 	}
        if ($query->num_rows() > 0) {
     	   return $query->result();
