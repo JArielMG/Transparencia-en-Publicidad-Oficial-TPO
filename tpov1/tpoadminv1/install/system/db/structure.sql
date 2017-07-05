@@ -2387,6 +2387,23 @@ DROP TABLE IF EXISTS `vtab_presupuesto`;
 CREATE VIEW `vtab_presupuesto` AS select `b`.`partida` AS `partida`,`b`.`denominacion` AS `descripcion`,`d`.`ejercicio` AS `ejercicio`,sum(`a`.`monto_presupuesto`) AS `original`,sum(`a`.`monto_modificacion`) AS `modificaciones`,(sum(`a`.`monto_presupuesto`) + sum(`a`.`monto_modificacion`)) AS `presupuesto`,ifnull((select sum(`f`.`monto_desglose`) from (`tab_facturas` `e` join `tab_facturas_desglose` `f`) where ((`e`.`active` = 1) and (`f`.`active` = 1) and (`e`.`id_factura` = `f`.`id_factura`) and (`e`.`id_presupuesto_concepto` = `a`.`id_presupuesto_concepto`))),0) AS `ejercido` from (((`tab_presupuestos_desglose` `a` join `cat_presupuesto_conceptos` `b`) join `tab_presupuestos` `c`) join `cat_ejercicios` `d`) where ((`a`.`active` = 1) and (`b`.`active` = 1) and (`c`.`active` = 1) and (`d`.`active` = 1) and (`a`.`id_presupuesto` = `c`.`id_presupuesto`) and (`a`.`id_presupuesto_concepto` = `b`.`id_presupesto_concepto`) and (`d`.`id_ejercicio` = `c`.`id_ejercicio`)) group by `d`.`ejercicio`,`b`.`denominacion`;
 
 
+DROP TABLE IF EXISTS `vtab_presupuesto_des`;
+CREATE VIEW vtab_presupuesto_des AS
+SELECT ej.ejercicio AS ejercicio, con.partida AS partida, con.denominacion AS descripcion,
+des.monto_presupuesto as original, des.monto_modificacion as modificaciones,
+( SUM(des.monto_presupuesto) + SUM(des.monto_modificacion)) AS presupuesto,
+( SELECT SUM(fglo.monto_desglose)
+FROM tab_facturas fac
+JOIN tab_facturas_desglose fglo ON fac.id_factura = fglo.id_factura
+WHERE fac.active = 1 and fglo.active = 1 AND
+fac.id_ejercicio = ej.id_ejercicio AND
+fac.id_presupuesto_concepto = des.id_presupuesto_concepto ) AS ejercido
+FROM tab_presupuestos_desglose des
+JOIN tab_presupuestos pres ON pres.id_presupuesto = des.id_presupuesto
+JOIN cat_ejercicios ej ON ej.id_ejercicio = pres.id_ejercicio
+JOIN cat_presupuesto_conceptos con ON con.id_presupesto_concepto = des.id_presupuesto_concepto
+GROUP BY con.denominacion, ej.ejercicio;
+
 -- Volcando estructura para vista rusiainf_inai.vtab_proveedores
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `vtab_proveedores`;

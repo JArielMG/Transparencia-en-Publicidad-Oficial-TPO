@@ -124,7 +124,7 @@ span.number-display {
 <?php
     include_once(DIR_ROOT . 'xcrud/xcrud.php');
     $xcrud = Xcrud::get_instance();
-    $xcrud->table('vtab_presupuesto');
+    $xcrud->table('vtab_presupuesto_des');
     if (getD3D("Ejercicio")<>'') {
        $xcrud->where('Ejercicio = ', getD3D("Ejercicio"));
     }
