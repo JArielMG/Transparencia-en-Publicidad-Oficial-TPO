@@ -805,6 +805,20 @@ tab_proveedores as e
 where
 a.id_proveedor = e.id_proveedor';
 
+$sql = 'SELECT CONCAT(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_proveedor, 
+(SELECT GROUP_CONCAT(procedimiento)
+FROM (SELECT GROUP_CONCAT(c.nombre_procedimiento) AS procedimiento FROM tab_facturas AS a, tab_ordenes_compra AS b, cat_procedimientos AS c WHERE b.id_orden_compra > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_orden_compra = a.id_orden_compra UNION
+SELECT GROUP_CONCAT(c.nombre_procedimiento) AS procedimiento FROM tab_facturas AS a, tab_contratos AS b, cat_procedimientos AS c WHERE b.id_contrato > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_contrato = a.id_contrato) proc) as procedimiento, 
+e.rfc, e.nombre_razon_social as razon_social, 
+(SELECT GROUP_CONCAT(razones)
+FROM ( SELECT GROUP_CONCAT(b.motivo_adjudicacion) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra UNION 
+SELECT GROUP_CONCAT(b.descripcion_justificacion) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato ) raz) as razones, 
+e.segundo_apellido, 
+(SELECT GROUP_CONCAT(fundamento)
+FROM ( SELECT GROUP_CONCAT(b.descripcion_justificacion) as fundamento from  tab_facturas AS a, tab_ordenes_compra as b where b.id_orden_compra > 1 and b.id_orden_compra = a.id_orden_compra union 
+select b.fundamento_juridico from  tab_facturas AS a, tab_contratos as b where b.id_contrato > 1 and b.id_contrato = a.id_contrato) fund) as fundamento, 
+e.primer_apellido, e.nombres, e.nombre_comercial from tab_facturas as a, tab_proveedores as e where a.id_proveedor = e.id_proveedor';
+
       $cols = array(
 "ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)",
 "Procedimiento de contratación:",
@@ -1137,7 +1151,7 @@ b.fecha_orden';
             if (file_exists ( $filename )) {
                unlink ( $filename );
             }            
-//            $continuar = $this->gasto_x_proveedor();
+            // $continuar = $this->gasto_x_proveedor();
             $continuar = $this->orden_compra();
             $continuar = $this->convenios();
             $continuar = $this->contratos();
@@ -1225,11 +1239,11 @@ b.fecha_orden';
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
          }	                  
 
-
          if ($_GET["exp"]=="PNT") {          
             $urlfilename = "data/PNT.zip";
             $filename = IDIR_ROOT . "data/PNT.zip";
             $filetemp = IDIR_ROOT . 'data/' . time() . '.zip';
+            /**/
             if (file_exists ( $filename )) {
                unlink ( $filename );
             }            
@@ -1248,7 +1262,8 @@ b.fecha_orden';
             rename( $filetemp, $filename );
             sleep( 3 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	                  
+            /**/
+         }                    
 
 
       }	        
