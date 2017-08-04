@@ -73,14 +73,14 @@
    private function leemeF70FXXIIIB_tabla_10632() {
       return $this->getDateTimeMD5( 'F70FXXIIIB_tabla_10632' ) . "F70FXXIIIB_tabla_10632\r\n
       ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)\r\n
-      Procedimiento de contratación:\r\n
-      Registro Federal de Contribuyentes\r\n
       Razón social\r\n
-      Razones que justifican la elección\r\n
-      Segundo apellido\r\n
-      Fundamento jurídico\r\n
-      Primer apellido\r\n
       Nombre (s)\r\n
+      Primer apellido\r\n
+      Segundo apellido\r\n
+      Registro Federal de Contribuyentes\r\n
+      Procedimiento de contratación:\r\n
+      Fundamento jurídico\r\n
+      Razones que justifican la elección\r\n
       Nombre comercial\r\n";
    }
 
@@ -88,31 +88,31 @@
       return $this->getDateTimeMD5( 'F70FXXIIIB_tabla_10633' ) . "F70FXXIIIB_tabla_10633\r\n
       ID Respecto a los recursos y el presupuesto (Factura-Orden de compra-Contrato-Proveedor\r\n
       Partida genérica\r\n
-      Presupuesto ejercido al periodo\r\n
-      Presupuesto total ejercido por concepto\r\n
-      Presupuesto modificado por concepto\r\n
-      Presupuesto modificado por partida\r\n
+      Clave del concepto\r\n
+      Nombre del concepto\r\n
       Presupuesto asignado por concepto\r\n
+      Presupuesto modificado por concepto\r\n
+      Presupuesto total ejercido por concepto\r\n
       Denominación de cada partida\r\n
       Presupuesto total asignado a cada partida\r\n
-      Nombre del concepto\r\n
-      Clave del concepto\r\n";           
+      Presupuesto modificado por partida\r\n
+      Presupuesto ejercido al periodo\r\n";           
    }
 
    private function leemeF70FXXIIIB_tabla_10656() {
       return $this->getDateTimeMD5( 'F70FXXIIIB_tabla_10656' ) . "F70FXXIIIB_tabla_10656\r\n
       ID Respecto al contrato y los montos (Factura-Orden de compra-Contrato-Proveedor)\r\n
-      Fecha de término\r\n
-      Objeto del contrato\r\n
-      Número o referencia de identificación del contrato\r\n
-      Número de Factura\r\n
-      Hipervínculo al convenio modificatorio, en su caso\r\n
-      Monto pagado al periodo publicado\r\n
-      Hipervínculo al contrato firmado\r\n
-      Monto total del contrato\r\n
-      Hipervínculo a la factura\r\n
       Fecha de firma de contrato\r\n
-      Fecha de inicio\r\n";      
+      Número o referencia de identificación del contrato\r\n
+      Objeto del contrato\r\n
+      Hipervínculo al contrato firmado\r\n
+      Hipervínculo al convenio modificatorio, en su caso\r\n
+      Monto total del contrato\r\n
+      Monto pagado al periodo publicado\r\n
+      Fecha de inicio\r\n
+      Fecha de término\r\n
+      Número de Factura\r\n
+      Hipervínculo a la factura\r\n";      
    }
 
    private function leemePNT() {
@@ -755,8 +755,13 @@ a.id_proveedor = e.id_proveedor';
    private function F70FXXIIIB_tabla_10632() {
       $sql = 'select 
 concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_proveedor, 
+e.nombre_razon_social as razon_social,
+e.nombres,
+e.primer_apellido,
+e.segundo_apellido,
+e.rfc,
 CONCAT((
-select c.nombre_procedimiento	 
+select c.nombre_procedimiento  
 from tab_ordenes_compra as b, cat_procedimientos as c
 where 
 b.id_orden_compra > 1 and
@@ -769,21 +774,6 @@ where
 b.id_contrato > 1 and
 b.id_procedimiento = c.id_procedimiento and
 b.id_contrato = a.id_contrato), " ") as procedimiento, 
-e.rfc,
-e.nombre_razon_social as razon_social,
-CONCAT((
-select b.motivo_adjudicacion 
-from tab_ordenes_compra as b
-where 
-b.id_orden_compra > 1 and
-b.id_orden_compra = a.id_orden_compra
-union
-select b.descripcion_justificacion 
-from tab_contratos as b
-where 
-b.id_contrato > 1 and
-b.id_contrato = a.id_contrato), " ") as razones, 
-e.segundo_apellido,
 CONCAT((
 select b.descripcion_justificacion
 from tab_ordenes_compra as b
@@ -796,8 +786,18 @@ from tab_contratos as b
 where 
 b.id_contrato > 1 and
 b.id_contrato = a.id_contrato), " ") as fundamento, 
-e.primer_apellido,
-e.nombres,
+CONCAT((
+select b.motivo_adjudicacion 
+from tab_ordenes_compra as b
+where 
+b.id_orden_compra > 1 and
+b.id_orden_compra = a.id_orden_compra
+union
+select b.descripcion_justificacion 
+from tab_contratos as b
+where 
+b.id_contrato > 1 and
+b.id_contrato = a.id_contrato), " ") as razones, 
 e.nombre_comercial
 from 
 tab_facturas as a,
@@ -807,28 +807,28 @@ a.id_proveedor = e.id_proveedor';
 
 $sql = 'SELECT CONCAT(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_proveedor, 
 (SELECT GROUP_CONCAT(procedimiento)
-FROM (SELECT GROUP_CONCAT(c.nombre_procedimiento) AS procedimiento FROM tab_facturas AS a, tab_ordenes_compra AS b, cat_procedimientos AS c WHERE b.id_orden_compra > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_orden_compra = a.id_orden_compra UNION
-SELECT GROUP_CONCAT(c.nombre_procedimiento) AS procedimiento FROM tab_facturas AS a, tab_contratos AS b, cat_procedimientos AS c WHERE b.id_contrato > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_contrato = a.id_contrato) proc) as procedimiento, 
+FROM (SELECT GROUP_CONCAT(IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_ordenes_compra AS b, cat_procedimientos AS c WHERE b.id_orden_compra > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_orden_compra = a.id_orden_compra UNION
+SELECT GROUP_CONCAT(IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_contratos AS b, cat_procedimientos AS c WHERE b.id_contrato > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_contrato = a.id_contrato) proc) as procedimiento, 
 e.rfc, e.nombre_razon_social as razon_social, 
 (SELECT GROUP_CONCAT(razones)
-FROM ( SELECT GROUP_CONCAT(b.motivo_adjudicacion) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra UNION 
-SELECT GROUP_CONCAT(b.descripcion_justificacion) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato ) raz) as razones, 
+FROM ( SELECT GROUP_CONCAT(IFNULL(b.motivo_adjudicacion, "")) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra UNION 
+SELECT GROUP_CONCAT(IFNULL(b.descripcion_justificacion, "")) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato ) raz) as razones, 
 e.segundo_apellido, 
 (SELECT GROUP_CONCAT(fundamento)
-FROM ( SELECT GROUP_CONCAT(b.descripcion_justificacion) as fundamento from  tab_facturas AS a, tab_ordenes_compra as b where b.id_orden_compra > 1 and b.id_orden_compra = a.id_orden_compra union 
-select b.fundamento_juridico from  tab_facturas AS a, tab_contratos as b where b.id_contrato > 1 and b.id_contrato = a.id_contrato) fund) as fundamento, 
+FROM ( SELECT GROUP_CONCAT(IFNULL(b.descripcion_justificacion, "")) as fundamento from  tab_facturas AS a, tab_ordenes_compra as b where b.id_orden_compra > 1 and b.id_orden_compra = a.id_orden_compra union 
+select GROUP_CONCAT(IFNULL(b.fundamento_juridico, "")) from  tab_facturas AS a, tab_contratos as b where b.id_contrato > 1 and b.id_contrato = a.id_contrato) fund) as fundamento, 
 e.primer_apellido, e.nombres, e.nombre_comercial from tab_facturas as a, tab_proveedores as e where a.id_proveedor = e.id_proveedor';
 
       $cols = array(
 "ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)",
-"Procedimiento de contratación:",
-"Registro Federal de Contribuyentes",
 "Razón social",
-"Razones que justifican la elección", 
-"Segundo apellido",
-"Fundamento jurídico",
-"Primer apellido",
 "Nombre (s)",
+"Primer apellido",
+"Segundo apellido",
+"Registro Federal de Contribuyentes",
+"Procedimiento de contratación:",
+"Fundamento jurídico",
+"Razones que justifican la elección", 
 "Nombre comercial");      
       $resultado = $this->Graficas_model->db->query($sql)->result(); 
       return dbToCSV(object_to_array($resultado), $cols, "data/F70FXXIIIB_tabla_10632.csv");
@@ -869,17 +869,17 @@ c.concepto';
       $sql = 'select 
 concat(g.ejercicio,"-",c.partida) as id_respecto_presupuesto, 
 c.partida as "Partida genérica",
-(select sum(b.monto_desglose) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
- a.id_presupuesto_concepto = e.id_presupuesto_concepto) as "Presupuesto ejercido al periodo",
-(select sum(b.monto_desglose) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
- a.id_presupuesto_concepto = e.id_presupuesto_concepto)  as "Presupuesto total ejercido por concepto", 
-(sum(e.monto_presupuesto)+sum(e.monto_modificacion)) as "Presupuesto modificado por concepto",
-(sum(e.monto_presupuesto)+sum(e.monto_modificacion)) as "Presupuesto modificado por partida",
+c.capitulo as "Clave del concepto",
+(select f.denominacion from cat_presupuesto_conceptos as f where f.capitulo = c.capitulo and trim(f.concepto="") and trim(f.partida="")) as "Nombre del concepto",
 sum(e.monto_presupuesto) as "Presupuesto asignado por concepto",
+(sum(e.monto_presupuesto)+sum(e.monto_modificacion)) as "Presupuesto modificado por concepto",
+(select sum(b.monto_desglose) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
+a.id_presupuesto_concepto = e.id_presupuesto_concepto)  as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
 (sum(e.monto_presupuesto)) as "Presupuesto total asignado a cada partida",
-(select f.denominacion from cat_presupuesto_conceptos as f where f.capitulo = c.capitulo and trim(f.concepto="") and trim(f.partida="")) as "Nombre del concepto",
-c.capitulo as "Clave del concepto"
+(sum(e.monto_presupuesto)+sum(e.monto_modificacion)) as "Presupuesto modificado por partida",
+(select sum(b.monto_desglose) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
+a.id_presupuesto_concepto = e.id_presupuesto_concepto and a.id_ejercicio = d.id_ejercicio ) as "Presupuesto ejercido al periodo"
 from 
 tab_presupuestos as d,
 tab_presupuestos_desglose as e,
@@ -898,15 +898,15 @@ d.denominacion';
       $cols = array(
 "ID Respecto a los recursos y el presupuesto (Factura-Orden de compra-Contrato-Proveedor)",
 "Partida genérica",
-"Presupuesto ejercido al periodo",
-"Presupuesto total ejercido por concepto", 
-"Presupuesto modificado por concepto",
-"Presupuesto modificado por partida",
+"Clave del concepto",
+"Nombre del concepto",
 "Presupuesto asignado por concepto",
+"Presupuesto modificado por concepto",
+"Presupuesto total ejercido por concepto", 
 "Denominación de cada partida",
 "Presupuesto total asignado a cada partida",
-"Nombre del concepto",
-"Clave del concepto");           
+"Presupuesto modificado por partida",
+"Presupuesto ejercido al periodo");           
       $resultado = $this->Graficas_model->db->query($sql)->result(); 
       return dbToCSV(object_to_array($resultado), $cols, "data/F70FXXIIIB_tabla_10633.csv");
    }    
@@ -914,17 +914,17 @@ d.denominacion';
    private function F70FXXIIIB_tabla_10656() {
       $sql = 'select 
 concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_contrato, 
-b.fecha_fin as "Fecha de término", 
-b.objeto_contrato as "Objeto del contrato",
-b.numero_contrato as  "Número o referencia de identificación del contrato",
-a.numero_factura as "Número de Factura",
-(select GROUP_CONCAT(c.file_convenio," * ") from tab_convenios_modificatorios as c where c.id_contrato=b.id_contrato) as "Hipervínculo al convenio modificatorio, en su caso",
-sum(e.monto_desglose) as "Monto pagado al periodo publicado",
-b.file_contrato as "Hipervínculo al contrato firmado",
-b.monto_contrato as  "Monto total del contrato",
-a.file_factura_pdf as  "Hipervínculo a la factura",
 b.fecha_celebracion as "Fecha de firma de contrato",
-b.fecha_inicio as "Fecha de inicio"
+b.numero_contrato as  "Número o referencia de identificación del contrato",
+b.objeto_contrato as "Objeto del contrato",
+b.file_contrato as "Hipervínculo al contrato firmado",
+(select GROUP_CONCAT(c.file_convenio," * ") from tab_convenios_modificatorios as c where c.id_contrato=b.id_contrato) as "Hipervínculo al convenio modificatorio, en su caso",
+b.monto_contrato as  "Monto total del contrato",
+sum(e.monto_desglose) as "Monto pagado al periodo publicado",
+b.fecha_inicio as "Fecha de inicio",
+b.fecha_fin as "Fecha de término", 
+a.numero_factura as "Número de Factura",
+a.file_factura_pdf as  "Hipervínculo a la factura"
 from 
 tab_facturas as a,
 tab_facturas_desglose as e,
@@ -977,17 +977,17 @@ b.fecha_orden';
 
       $cols = array(
 "ID Respecto al contrato y los montos (Factura-Orden de compra-Contrato-Proveedor)",
-"Fecha de término", 
-"Objeto del contrato",
-"Número o referencia de identificación del contrato",
-"Número de Factura",
-"Hipervínculo al convenio modificatorio, en su caso",
-"Monto pagado al periodo publicado",
-"Hipervínculo al contrato firmado",
-"Monto total del contrato",
-"Hipervínculo a la factura",
 "Fecha de firma de contrato",
-"Fecha de inicio");      
+"Número o referencia de identificación del contrato",
+"Objeto del contrato",
+"Hipervínculo al contrato firmado",
+"Hipervínculo al convenio modificatorio, en su caso",
+"Monto total del contrato",
+"Monto pagado al periodo publicado",
+"Fecha de inicio",
+"Fecha de término", 
+"Número de Factura",
+"Hipervínculo a la factura");      
       $resultado = $this->Graficas_model->db->query($sql)->result(); 
       return dbToCSV(object_to_array($resultado), $cols, "data/F70FXXIIIB_tabla_10656.csv");
    }    
