@@ -806,18 +806,22 @@ where
 a.id_proveedor = e.id_proveedor';
 
 $sql = 'SELECT CONCAT(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_proveedor, 
+e.nombre_razon_social as razon_social, 
+e.nombres, 
+e.primer_apellido, 
+e.segundo_apellido, 
+e.rfc, 
 (SELECT GROUP_CONCAT(procedimiento)
 FROM (SELECT GROUP_CONCAT(IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_ordenes_compra AS b, cat_procedimientos AS c WHERE b.id_orden_compra > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_orden_compra = a.id_orden_compra UNION
 SELECT GROUP_CONCAT(IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_contratos AS b, cat_procedimientos AS c WHERE b.id_contrato > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_contrato = a.id_contrato) proc) as procedimiento, 
-e.rfc, e.nombre_razon_social as razon_social, 
-(SELECT GROUP_CONCAT(razones)
-FROM ( SELECT GROUP_CONCAT(IFNULL(b.motivo_adjudicacion, "")) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra UNION 
-SELECT GROUP_CONCAT(IFNULL(b.descripcion_justificacion, "")) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato ) raz) as razones, 
-e.segundo_apellido, 
 (SELECT GROUP_CONCAT(fundamento)
 FROM ( SELECT GROUP_CONCAT(IFNULL(b.descripcion_justificacion, "")) as fundamento from  tab_facturas AS a, tab_ordenes_compra as b where b.id_orden_compra > 1 and b.id_orden_compra = a.id_orden_compra union 
 select GROUP_CONCAT(IFNULL(b.fundamento_juridico, "")) from  tab_facturas AS a, tab_contratos as b where b.id_contrato > 1 and b.id_contrato = a.id_contrato) fund) as fundamento, 
-e.primer_apellido, e.nombres, e.nombre_comercial from tab_facturas as a, tab_proveedores as e where a.id_proveedor = e.id_proveedor';
+(SELECT GROUP_CONCAT(razones)
+FROM ( SELECT GROUP_CONCAT(IFNULL(b.motivo_adjudicacion, "")) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra UNION 
+SELECT GROUP_CONCAT(IFNULL(b.descripcion_justificacion, "")) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato ) raz) as razones, 
+e.nombre_comercial 
+from tab_facturas as a, tab_proveedores as e where a.id_proveedor = e.id_proveedor';
 
       $cols = array(
 "ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)",
