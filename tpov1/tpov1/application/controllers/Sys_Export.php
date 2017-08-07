@@ -912,11 +912,12 @@ d.denominacion';
    }    
 
    private function F70FXXIIIB_tabla_10656() {
+//b.objeto_contrato as "Objeto del contrato",
       $sql = 'select 
 concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_contrato, 
 b.fecha_celebracion as "Fecha de firma de contrato",
 b.numero_contrato as  "Número o referencia de identificación del contrato",
-b.objeto_contrato as "Objeto del contrato",
+REPLACE(REPLACE(REPLACE(b.objeto_contrato, ",", "&#44;"), "\r", ""), "\n", "") as "Objeto del contrato",
 b.file_contrato as "Hipervínculo al contrato firmado",
 (select GROUP_CONCAT(c.file_convenio," * ") from tab_convenios_modificatorios as c where c.id_contrato=b.id_contrato) as "Hipervínculo al convenio modificatorio, en su caso",
 b.monto_contrato as  "Monto total del contrato",
