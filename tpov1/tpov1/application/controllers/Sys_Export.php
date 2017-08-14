@@ -753,8 +753,7 @@ a.id_proveedor = e.id_proveedor';
 
 
    private function F70FXXIIIB_tabla_10632() {
-     
-
+/*
 $sql = 'SELECT CONCAT(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_proveedor, 
 e.nombre_razon_social as razon_social, 
 e.nombres, 
@@ -762,14 +761,32 @@ e.primer_apellido,
 e.segundo_apellido, 
 e.rfc, 
 (SELECT GROUP_CONCAT(procedimiento)
-FROM (SELECT GROUP_CONCAT( DISTINCT IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_ordenes_compra AS b, cat_procedimientos AS c WHERE b.id_orden_compra > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_orden_compra = a.id_orden_compra group by c.nombre_procedimiento UNION
-SELECT GROUP_CONCAT( DISTINCT IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_contratos AS b, cat_procedimientos AS c WHERE b.id_contrato > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_contrato = a.id_contrato group by c.nombre_procedimiento) proc) as procedimiento, 
-(SELECT GROUP_CONCAT(fundamento)FROM ( SELECT GROUP_CONCAT( DISTINCT IFNULL(b.descripcion_justificacion, "")) as fundamento from  tab_facturas AS a, tab_ordenes_compra as b where b.id_orden_compra > 1 and b.id_orden_compra = a.id_orden_compra group by b.descripcion_justificacion union 
-select GROUP_CONCAT( DISTINCT IFNULL(b.fundamento_juridico, "")) from  tab_facturas AS a, tab_contratos as b where b.id_contrato > 1 and b.id_contrato = a.id_contrato group by b.fundamento_juridico) fund) as fundamento, 
-(SELECT GROUP_CONCAT(razones) FROM ( SELECT GROUP_CONCAT( DISTINCT IFNULL(b.motivo_adjudicacion, "")) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra group by b.motivo_adjudicacion UNION 
-SELECT GROUP_CONCAT( DISTINCT IFNULL(b.descripcion_justificacion, "")) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato group by b.descripcion_justificacion ) raz) as razones, 
+FROM 
+(SELECT GROUP_CONCAT( DISTINCT IFNULL(c.nombre_procedimiento, "")) AS procedimiento FROM tab_facturas AS a, tab_contratos AS b, tab_ordenes_compra AS b2, cat_procedimientos AS c 
+WHERE b.id_contrato > 1 AND b.id_procedimiento = c.id_procedimiento AND b.id_contrato = a.id_contrato AND b2.id_orden_compra > 1 AND b2.id_procedimiento = b.id_procedimiento AND b2.id_orden_compra = a.id_orden_compra GROUP BY c.nombre_procedimiento) proc) as procedimiento, 
+(SELECT GROUP_CONCAT(fundamento)FROM ( SELECT GROUP_CONCAT( DISTINCT IFNULL(b.descripcion_justificacion, "")) as fundamento from  tab_facturas AS a, tab_ordenes_compra as b where b.id_orden_compra > 1 and b.id_orden_compra = a.id_orden_compra group by b.descripcion_justificacion union select GROUP_CONCAT( DISTINCT IFNULL(b.fundamento_juridico, "")) from  tab_facturas AS a, tab_contratos as b where b.id_contrato > 1 and b.id_contrato = a.id_contrato group by b.fundamento_juridico) fund) as fundamento, 
+(SELECT GROUP_CONCAT(razones) FROM ( SELECT GROUP_CONCAT( DISTINCT IFNULL(b.motivo_adjudicacion, "")) AS razones FROM tab_facturas AS a, tab_ordenes_compra AS b where b.id_orden_compra > 1 AND b.id_orden_compra = a.id_orden_compra group by b.motivo_adjudicacion UNION SELECT GROUP_CONCAT( DISTINCT IFNULL(b.descripcion_justificacion, "")) FROM tab_facturas AS a, tab_contratos AS b where b.id_contrato > 1 AND b.id_contrato = a.id_contrato group by b.descripcion_justificacion ) raz) as razones, 
 e.nombre_comercial 
 from tab_facturas as a, tab_proveedores as e where a.id_proveedor = e.id_proveedor';
+*/
+
+   $sql = 'SELECT CONCAT(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_proveedor, 
+e.nombre_razon_social as razon_social, 
+e.nombres, 
+e.primer_apellido, 
+e.segundo_apellido, 
+e.rfc, 
+p.procedimiento,
+f.fundamento,
+r.razones,
+e.nombre_comercial 
+FROM tab_facturas AS a, tab_proveedores AS e,
+( SELECT DISTINCT IFNULL(fundamento_juridico, "") AS fundamento, id_contrato FROM tab_contratos WHERE id_contrato > 1 ) AS f,
+( SELECT DISTINCT IFNULL(descripcion_justificacion, "") AS razones, id_orden_compra FROM tab_ordenes_compra AS b WHERE b.id_orden_compra > 1 ) AS r,
+( SELECT DISTINCT IFNULL(p.nombre_procedimiento, "") AS procedimiento, c.id_contrato
+   FROM tab_contratos AS c, tab_ordenes_compra AS o, cat_procedimientos AS p 
+   WHERE c.id_contrato > 1 AND p.id_procedimiento = c.id_procedimiento AND o.id_procedimiento = p.id_procedimiento AND o.id_orden_compra > 1 ) AS p
+WHERE a.id_proveedor = e.id_proveedor AND f.id_contrato = a.id_contrato AND r.id_orden_compra = a.id_orden_compra AND p.id_contrato = a.id_contrato';
 
       $cols = array(
 "ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)",
@@ -866,7 +883,7 @@ d.denominacion';
    private function F70FXXIIIB_tabla_10656() {
 //b.objeto_contrato as "Objeto del contrato",
       $sql = 'select 
-concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_contrato, 
+concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ) as id_respecto_contrato, 
 b.fecha_celebracion as "Fecha de firma de contrato",
 b.numero_contrato as  "Número o referencia de identificación del contrato",
 REPLACE(REPLACE(REPLACE(b.objeto_contrato, ",", "&#44;"), "\r", ""), "\n", "") as "Objeto del contrato",
@@ -887,7 +904,7 @@ a.id_factura = e.id_factura and
 a.id_contrato = b.id_contrato and
 a.id_contrato > 1
 group by 
-concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor), 
+concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ), 
 b.fecha_fin, 
 b.objeto_contrato,
 b.numero_contrato,
@@ -896,10 +913,11 @@ b.file_contrato,
 b.monto_contrato,
 a.file_factura_pdf,
 b.fecha_celebracion,
-b.fecha_inicio
+b.fecha_inicio';
+/*
 union
 select 
-concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_contrato, 
+concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ) as id_respecto_contrato, 
 "" as "Fecha de término", 
 b.descripcion_justificacion as "Objeto del contrato",
 b.numero_orden_compra as  "Número o referencia de identificación del contrato",
@@ -920,13 +938,13 @@ a.id_factura = e.id_factura and
 a.id_orden_compra = b.id_orden_compra and
 a.id_orden_compra > 1
 group by 
-concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor), 
+concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ), 
 b.descripcion_justificacion,
 b.numero_orden_compra,
 a.numero_factura,
 a.file_factura_pdf,
 b.fecha_orden,
-b.fecha_orden';
+b.fecha_orden';*/
 
       $cols = array(
 "ID Respecto al contrato y los montos (Factura-Orden de compra-Contrato-Proveedor)",
