@@ -964,31 +964,31 @@ b.fecha_orden';*/
    }    
 
       private function limpiarCadena($valor){
-	$valor = str_ireplace("javascript:alert","",$valor);
-	$valor = str_ireplace("alert","",$valor);
-	$valor = str_ireplace("SELECT","",$valor);
+   $valor = str_ireplace("javascript:alert","",$valor);
+   $valor = str_ireplace("alert","",$valor);
+   $valor = str_ireplace("SELECT","",$valor);
         $valor = str_ireplace("INSERT","",$valor); 
-	$valor = str_ireplace("COPY","",$valor);
-	$valor = str_ireplace("DELETE","",$valor);
-	$valor = str_ireplace("DROP","",$valor);
-	$valor = str_ireplace("DUMP","",$valor);
-	$valor = str_ireplace(" OR ","",$valor);
-	$valor = str_ireplace(" AND ","",$valor);
-	$valor = str_ireplace("%","",$valor);
-	$valor = str_ireplace("LIKE","",$valor);
-	$valor = str_ireplace("--","",$valor);
-	$valor = str_ireplace("^","",$valor);
-	$valor = str_ireplace("[","",$valor);
-	$valor = str_ireplace("]","",$valor);
-	$valor = str_ireplace("\\","",$valor);
-	$valor = str_ireplace("!","",$valor);
-	$valor = str_ireplace("¡","",$valor);
-	$valor = str_ireplace("?","",$valor);
-	$valor = str_ireplace("=","",$valor);
-	$valor = str_ireplace("&","",$valor);
-	$valor = str_ireplace("<?php","",$valor);
-	$valor = str_ireplace("?>","",$valor);
-	return $valor;
+   $valor = str_ireplace("COPY","",$valor);
+   $valor = str_ireplace("DELETE","",$valor);
+   $valor = str_ireplace("DROP","",$valor);
+   $valor = str_ireplace("DUMP","",$valor);
+   $valor = str_ireplace(" OR ","",$valor);
+   $valor = str_ireplace(" AND ","",$valor);
+   $valor = str_ireplace("%","",$valor);
+   $valor = str_ireplace("LIKE","",$valor);
+   $valor = str_ireplace("--","",$valor);
+   $valor = str_ireplace("^","",$valor);
+   $valor = str_ireplace("[","",$valor);
+   $valor = str_ireplace("]","",$valor);
+   $valor = str_ireplace("\\","",$valor);
+   $valor = str_ireplace("!","",$valor);
+   $valor = str_ireplace("¡","",$valor);
+   $valor = str_ireplace("?","",$valor);
+   $valor = str_ireplace("=","",$valor);
+   $valor = str_ireplace("&","",$valor);
+   $valor = str_ireplace("<?php","",$valor);
+   $valor = str_ireplace("?>","",$valor);
+   return $valor;
       }
 
       private function mysql_escape_mimic($inp) { 
@@ -1001,14 +1001,14 @@ b.fecha_orden';*/
          return $inp; 
       } 
 
-   public function index() {	
+   public function index() {  
          $input_arr = array(); 
          foreach ($_POST as $key => $input_arr) { 
-	    $_POST[$key] = htmlspecialchars(addslashes($this->limpiarCadena($this->mysql_escape_mimic(strip_tags($input_arr))))); 
+       $_POST[$key] = htmlspecialchars(addslashes($this->limpiarCadena($this->mysql_escape_mimic(strip_tags($input_arr))))); 
          }
          $input_arr = array(); 
          foreach ($_GET as $key => $input_arr) { 
-	    $_GET[$key] = htmlspecialchars(addslashes($this->limpiarCadena($this->mysql_escape_mimic(strip_tags($input_arr))))); 
+       $_GET[$key] = htmlspecialchars(addslashes($this->limpiarCadena($this->mysql_escape_mimic(strip_tags($input_arr))))); 
          }
 
       if (isset($_GET["exp"])) {
@@ -1051,7 +1051,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	
+         }  
          
          if ($_GET["exp"]=="presupuesto") {          
             $urlfilename = "data/PresupuestoData.zip";
@@ -1071,7 +1071,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	                                 
+         }                                   
          
          if ($_GET["exp"]=="porproveedor") {          
             $urlfilename = "data/GastoXProveedorData.zip";
@@ -1093,7 +1093,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	                                 
+         }                                   
          
          if ($_GET["exp"]=="porservicio") {          
             $urlfilename = "data/GastoPorServicioData.zip";
@@ -1113,7 +1113,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	
+         }  
          
          if ($_GET["exp"]=="contratosyordenes") {          
             $urlfilename = "data/ContratosyOrdenesData.zip";
@@ -1135,7 +1135,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	
+         }  
          
          if ($_GET["exp"]=="campanasyavisos") {          
             $urlfilename = "data/CampnasyAvisosData.zip";
@@ -1165,7 +1165,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	
+         }  
          
          if ($_GET["exp"]=="so") {          
             $urlfilename = "data/SujetosObligadosData.zip";
@@ -1188,7 +1188,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	
+         }  
          
          if ($_GET["exp"]=="erogaciones") {          
             $urlfilename = "data/ErogacionesData.zip";
@@ -1208,7 +1208,7 @@ b.fecha_orden';*/
             rename( $filetemp, $filename );
             sleep( 1 );
             echo "<script> window.open('". $urlfilename ."', '_blank'); window.history.back(); </script>";               
-         }	                  
+         }                    
 
          if ($_GET["exp"]=="PNT") {          
             $urlfilename = "data/PNT.zip";
@@ -1237,7 +1237,7 @@ b.fecha_orden';*/
          }                    
 
 
-      }	        
+      }          
    }
 }
 ?>
