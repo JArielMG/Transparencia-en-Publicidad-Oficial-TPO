@@ -778,7 +778,7 @@ e.segundo_apellido,
 e.rfc, 
 p.procedimiento,
 f.fundamento,
-r.razones,
+REPLACE(r.razones, "<!-- [if !supportLists]-->·         <!--[endif]-->", "") AS razones,
 e.nombre_comercial 
 FROM tab_facturas AS a, tab_proveedores AS e,
 ( SELECT DISTINCT IFNULL(fundamento_juridico, "") AS fundamento, id_contrato FROM tab_contratos WHERE id_contrato > 1 ) AS f,
@@ -804,50 +804,20 @@ WHERE a.id_proveedor = e.id_proveedor AND f.id_contrato = a.id_contrato AND r.id
    }    
 
    private function F70FXXIIIB_tabla_10633() {
-/*
-      $sql = 'select 
-concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor) as id_respecto_presupuesto, 
-c.partida as "Partida genérica",
-sum(b.monto_desglose) as "Presupuesto ejercido al periodo",
-sum(b.monto_desglose) as "Presupuesto total ejercido por concepto", 
-sum(e.monto_modificacion) as "Presupuesto modificado por concepto",
-sum(e.monto_modificacion) as "Presupuesto modificado por partida",
-sum(e.monto_presupuesto) as "Presupuesto asignado por concepto",
-d.denominacion as "Denominación de cada partida",
-(sum(e.monto_presupuesto) + sum(e.monto_modificacion))"Presupuesto total asignado a cada partida",
-c.descripcion  as "Nombre del concepto",
-c.concepto as "Clave del concepto"
-from 
-tab_facturas as a,
-tab_facturas_desglose as b,
-cat_presupuesto_conceptos as c,
-tab_presupuestos as d,
-tab_presupuestos_desglose as e
-where
-a.id_factura = b.id_factura and
-a.id_presupuesto_concepto = c.id_presupesto_concepto and
-a.id_presupuesto_concepto = e.id_presupuesto_concepto and
-e.id_presupuesto_concepto = a.id_presupuesto_concepto 
-group by 
-concat(a.id_factura,"-",a.id_orden_compra,"-",a.id_contrato,"-",a.id_proveedor),
-c.partida,
-d.denominacion,
-c.descripcion,
-c.concepto';
-*/
+
       $sql = 'select 
 concat(g.ejercicio,"-",c.partida) as id_respecto_presupuesto, 
 c.partida as "Partida genérica",
 c.capitulo as "Clave del concepto",
 (select f.denominacion from cat_presupuesto_conceptos as f where f.capitulo = c.capitulo and trim(f.concepto="") and trim(f.partida="")) as "Nombre del concepto",
-sum(e.monto_presupuesto) as "Presupuesto asignado por concepto",
-(sum(e.monto_presupuesto)+sum(e.monto_modificacion)) as "Presupuesto modificado por concepto",
-(select sum(b.monto_desglose) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
+sum(IFNULL(e.monto_presupuesto, 0)) as "Presupuesto asignado por concepto",
+(sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por concepto",
+(select sum(IFNULL(b.monto_desglose, 0)) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
 a.id_presupuesto_concepto = e.id_presupuesto_concepto and b.periodo = e.periodo) as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
-(sum(e.monto_presupuesto)) as "Presupuesto total asignado a cada partida",
-(sum(e.monto_presupuesto)+sum(e.monto_modificacion)) as "Presupuesto modificado por partida",
-(select sum(b.monto_desglose) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
+(sum(IFNULL(e.monto_presupuesto, 0))) as "Presupuesto total asignado a cada partida",
+(sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por partida",
+(select sum(IFNULL(b.monto_desglose, 0)) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
 a.id_presupuesto_concepto = e.id_presupuesto_concepto and a.id_ejercicio = d.id_ejercicio ) as "Presupuesto ejercido al periodo"
 from 
 tab_presupuestos as d,
@@ -879,7 +849,6 @@ d.denominacion';
       $resultado = $this->Graficas_model->db->query($sql)->result(); 
       return dbToCSV(object_to_array($resultado), $cols, "data/F70FXXIIIB_tabla_10633.csv");
    }    
-
    private function F70FXXIIIB_tabla_10656() {
 //b.objeto_contrato as "Objeto del contrato",
       $sql = 'select 
@@ -913,10 +882,38 @@ b.file_contrato,
 b.monto_contrato,
 a.file_factura_pdf,
 b.fecha_celebracion,
-b.fecha_inicio';
-/*
+b.fecha_inicio
 union
 select 
+concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ) as id_respecto_contrato, 
+b.fecha_orden as "Fecha de firma de contrato",
+b.numero_orden_compra as  "Número o referencia de identificación del contrato",
+b.descripcion_justificacion as "Objeto del contrato",
+"" as "Hipervínculo al contrato firmado",
+"" as "Hipervínculo al convenio modificatorio, en su caso",
+0 as  "Monto total del contrato",
+sum(e.monto_desglose) as "Monto pagado al periodo publicado",
+b.fecha_orden as "Fecha de inicio",
+"" as "Fecha de término", 
+a.numero_factura as "Número de Factura",
+a.file_factura_pdf as  "Hipervínculo a la factura"
+from 
+tab_facturas as a,
+tab_facturas_desglose as e,
+tab_ordenes_compra as b
+where
+a.id_factura = e.id_factura and
+a.id_orden_compra = b.id_orden_compra and
+a.id_orden_compra > 1
+group by 
+concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ), 
+b.descripcion_justificacion,
+b.numero_orden_compra,
+a.numero_factura,
+a.file_factura_pdf,
+b.fecha_orden,
+b.fecha_orden';
+/*
 concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ) as id_respecto_contrato, 
 "" as "Fecha de término", 
 b.descripcion_justificacion as "Objeto del contrato",
@@ -944,7 +941,8 @@ b.numero_orden_compra,
 a.numero_factura,
 a.file_factura_pdf,
 b.fecha_orden,
-b.fecha_orden';*/
+b.fecha_orden';
+/**/
 
       $cols = array(
 "ID Respecto al contrato y los montos (Factura-Orden de compra-Contrato-Proveedor)",
