@@ -890,21 +890,23 @@ b.fecha_orden as "Fecha de firma de contrato",
 b.numero_orden_compra as  "Número o referencia de identificación del contrato",
 b.descripcion_justificacion as "Objeto del contrato",
 "" as "Hipervínculo al contrato firmado",
-"" as "Hipervínculo al convenio modificatorio, en su caso",
-0 as  "Monto total del contrato",
+(select GROUP_CONCAT( IFNULL(c.file_convenio, "") ," * ") from tab_convenios_modificatorios as c where c.id_contrato=b.id_contrato) as "Hipervínculo al convenio modificatorio, en su caso",
+IFNULL(c.monto_contrato, 0) as  "Monto total del contrato",
 sum(e.monto_desglose) as "Monto pagado al periodo publicado",
 b.fecha_orden as "Fecha de inicio",
-"" as "Fecha de término", 
+IFNULL(c.fecha_fin, "") as "Fecha de término", 
 a.numero_factura as "Número de Factura",
 a.file_factura_pdf as  "Hipervínculo a la factura"
 from 
 tab_facturas as a,
 tab_facturas_desglose as e,
-tab_ordenes_compra as b
+tab_ordenes_compra as b,
+tab_contratos as c
 where
 a.id_factura = e.id_factura and
 a.id_orden_compra = b.id_orden_compra and
-a.id_orden_compra > 1
+a.id_orden_compra > 1 and 
+b.id_contrato = c.id_contrato
 group by 
 concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ), 
 b.descripcion_justificacion,
