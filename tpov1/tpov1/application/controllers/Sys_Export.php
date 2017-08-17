@@ -813,7 +813,7 @@ c.capitulo as "Clave del concepto",
 sum(IFNULL(e.monto_presupuesto, 0)) as "Presupuesto asignado por concepto",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por concepto",
 (select sum(IFNULL(b.monto_desglose, 0)) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
-a.id_presupuesto_concepto = c.id_presupuesto_concepto and b.periodo = e.periodo) as "Presupuesto total ejercido por concepto", 
+a.id_presupuesto_concepto = e.id_presupuesto_concepto and b.periodo = e.periodo) as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))) as "Presupuesto total asignado a cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por partida",
