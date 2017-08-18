@@ -778,15 +778,15 @@ e.segundo_apellido,
 e.rfc, 
 p.procedimiento,
 f.fundamento,
-IFNULL(REPLACE(r.razones, "<!-- [if !supportLists]-->·         <!--[endif]-->", ""), "") AS razones,
+r.razones,
 e.nombre_comercial 
 FROM tab_facturas AS a, tab_proveedores AS e,
-( SELECT DISTINCT IFNULL(fundamento_juridico, "") AS fundamento, id_contrato FROM tab_contratos WHERE id_contrato > 1 ) AS f,
-( SELECT DISTINCT IFNULL(descripcion_justificacion, "") AS razones, id_orden_compra FROM tab_ordenes_compra AS b WHERE b.id_orden_compra > 1 ) AS r,
+( SELECT DISTINCT IFNULL(fundamento_juridico, "") AS fundamento, id_contrato FROM tab_contratos ) AS f,
+( SELECT DISTINCT IFNULL(descripcion_justificacion, "") AS razones, id_orden_compra FROM tab_ordenes_compra AS b  ) AS r, 
 ( SELECT DISTINCT IFNULL(p.nombre_procedimiento, "") AS procedimiento, c.id_contrato
    FROM tab_contratos AS c, tab_ordenes_compra AS o, cat_procedimientos AS p 
-   WHERE c.id_contrato > 1 AND p.id_procedimiento = c.id_procedimiento AND o.id_procedimiento = p.id_procedimiento AND o.id_orden_compra > 1 ) AS p
-WHERE a.id_proveedor = e.id_proveedor AND f.id_contrato = a.id_contrato AND r.id_orden_compra = a.id_orden_compra AND p.id_contrato = a.id_contrato';
+   WHERE c.id_contrato > 1 AND p.id_procedimiento = c.id_procedimiento AND o.id_procedimiento = p.id_procedimiento ) AS p 
+WHERE a.id_proveedor = e.id_proveedor AND f.id_contrato = a.id_contrato AND p.id_contrato = a.id_contrato AND a.id_orden_compra IS NOT NULL AND r.id_orden_compra = a.id_orden_compra ';
 
       $cols = array(
 "ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)",
@@ -812,8 +812,9 @@ c.capitulo as "Clave del concepto",
 (select f.denominacion from cat_presupuesto_conceptos as f where f.capitulo = c.capitulo and trim(f.concepto="") and trim(f.partida="")) as "Nombre del concepto",
 sum(IFNULL(e.monto_presupuesto, 0)) as "Presupuesto asignado por concepto",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por concepto",
-(select sum(IFNULL(b.monto_desglose, 0)) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
-a.id_presupuesto_concepto = e.id_presupuesto_concepto and b.periodo = e.periodo) as "Presupuesto total ejercido por concepto", 
+(SELECT monto from 
+( select sum(IFNULL(b.monto_desglose, 0)) AS monto, a.id_presupuesto_concepto, b.periodo from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura group by a.id_presupuesto_concepto, b.periodo) pr
+WHERE pr.id_presupuesto_concepto = e.id_presupuesto_concepto AND pr.periodo = e.periodo ) as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))) as "Presupuesto total asignado a cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por partida",
@@ -830,8 +831,9 @@ e.id_presupuesto_concepto = c.id_presupesto_concepto and
 d.id_ejercicio = g.id_ejercicio
 group by 
 e.id_presupuesto_concepto,
-e.id_presupuesto,
-d.denominacion';
+e.periodo';
+/*e.id_presupuesto,
+d.denominacion';*/
 
 
       $cols = array(
@@ -891,7 +893,7 @@ b.numero_orden_compra as  "Número o referencia de identificación del contrato"
 b.descripcion_justificacion as "Objeto del contrato",
 "" as "Hipervínculo al contrato firmado",
 (select GROUP_CONCAT( IFNULL(c.file_convenio, "") ," * ") from tab_convenios_modificatorios as c where c.id_contrato=b.id_contrato) as "Hipervínculo al convenio modificatorio, en su caso",
-IFNULL(c.monto_contrato, 0) as  "Monto total del contrato",
+e.monto_desglose as  "Monto total del contrato",
 sum(e.monto_desglose) as "Monto pagado al periodo publicado",
 b.fecha_orden as "Fecha de inicio",
 IFNULL(c.fecha_fin, "") as "Fecha de término", 
@@ -906,14 +908,13 @@ where
 a.id_factura = e.id_factura and
 a.id_orden_compra = b.id_orden_compra and
 a.id_orden_compra > 1 and 
-b.id_contrato = c.id_contrato
+c.id_contrato = b.id_contrato
 group by 
 concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ), 
 b.descripcion_justificacion,
 b.numero_orden_compra,
 a.numero_factura,
 a.file_factura_pdf,
-b.fecha_orden,
 b.fecha_orden';
 /*
 concat(IFNULL(a.id_factura, ""), "-", IFNULL(a.id_orden_compra, ""), "-", IFNULL( a.id_contrato, "" ), "-", IFNULL( a.id_proveedor, "" ) ) as id_respecto_contrato, 
