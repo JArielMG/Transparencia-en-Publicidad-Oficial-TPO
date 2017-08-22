@@ -776,17 +776,15 @@ e.nombres,
 e.primer_apellido, 
 e.segundo_apellido, 
 e.rfc, 
-p.procedimiento,
 f.fundamento,
 r.razones,
-e.nombre_comercial 
+p.procedimiento,
+e.nombre_comercial
 FROM tab_facturas AS a, tab_proveedores AS e,
 ( SELECT DISTINCT IFNULL(fundamento_juridico, "") AS fundamento, id_contrato FROM tab_contratos ) AS f,
-( SELECT DISTINCT IFNULL(descripcion_justificacion, "") AS razones, id_orden_compra FROM tab_ordenes_compra AS b  ) AS r, 
-( SELECT DISTINCT IFNULL(p.nombre_procedimiento, "") AS procedimiento, c.id_contrato
-   FROM tab_contratos AS c, tab_ordenes_compra AS o, cat_procedimientos AS p 
-   WHERE c.id_contrato > 1 AND p.id_procedimiento = c.id_procedimiento AND o.id_procedimiento = p.id_procedimiento ) AS p 
-WHERE a.id_proveedor = e.id_proveedor AND f.id_contrato = a.id_contrato AND p.id_contrato = a.id_contrato AND a.id_orden_compra IS NOT NULL AND r.id_orden_compra = a.id_orden_compra ';
+( SELECT DISTINCT IFNULL(descripcion_justificacion, "") AS razones, id_orden_compra FROM tab_ordenes_compra AS b  ) AS r,
+( SELECT DISTINCT IFNULL(p.nombre_procedimiento, "") AS procedimiento, c.id_contrato FROM cat_procedimientos AS p, tab_contratos AS c WHERE p.id_procedimiento = c.id_procedimiento) AS p
+WHERE a.id_proveedor = e.id_proveedor AND f.id_contrato = a.id_contrato AND a.id_orden_compra IS NOT NULL  AND r.id_orden_compra = a.id_orden_compra AND p.id_contrato = a.id_contrato ';
 
       $cols = array(
 "ID Respecto a los proveedores y su contratación (Factura-Orden de compra-Contrato-Proveedor)",
