@@ -776,9 +776,9 @@ e.nombres,
 e.primer_apellido, 
 e.segundo_apellido, 
 e.rfc, 
+p.procedimiento,
 f.fundamento,
 r.razones,
-p.procedimiento,
 e.nombre_comercial
 FROM tab_facturas AS a, tab_proveedores AS e,
 ( SELECT DISTINCT IFNULL(fundamento_juridico, "") AS fundamento, id_contrato FROM tab_contratos ) AS f,
@@ -811,7 +811,8 @@ c.capitulo as "Clave del concepto",
 sum(IFNULL(e.monto_presupuesto, 0)) as "Presupuesto asignado por concepto",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por concepto",
 (SELECT monto from 
-( select sum(IFNULL(b.monto_desglose, 0)) AS monto, a.id_presupuesto_concepto, b.periodo from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura group by a.id_presupuesto_concepto, b.periodo) pr
+( select sum(IFNULL(b.monto_desglose, 0)) AS monto, a.id_presupuesto_concepto, b.periodo from tab_facturas as a, tab_facturas_desglose as b 
+   where a.id_factura = b.id_factura group by a.id_presupuesto_concepto, b.periodo) pr
 WHERE pr.id_presupuesto_concepto = e.id_presupuesto_concepto AND pr.periodo = e.periodo ) as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))) as "Presupuesto total asignado a cada partida",
