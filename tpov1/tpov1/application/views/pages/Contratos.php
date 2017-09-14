@@ -16,9 +16,9 @@
    }
    </style>
 
-<link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-<link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-<link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -79,7 +79,7 @@ Muestra el número de órdenes de compra que no están asociadas a un contrato, 
    </center>
    <center>
       <!--div data-step="5" data-intro="Se muestran la gráfica de contratos y órdenes de compra por proveedor.">
-   <iframe src="graphs/contratosyoc/index.php" frameborder="0" scrolling="no" onload="resizeIframe(this)" style="width:90%;" /> 
+   <iframe src="<?php echo base_url(); ?>graphs/contratosyoc/index.php" frameborder="0" scrolling="no" onload="resizeIframe(this)" style="width:90%;" /> 
    </iframe>
       <div-->
    </center>
@@ -148,7 +148,7 @@ Muestra el número de órdenes de compra que no están asociadas a un contrato, 
       </div>
    </div>
 
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
 <script>
 	$('#Ejercicio').change(function() {
 	   window.location = 'Sys_Screen?v=Contratos&g=pages&e=' + $(this).val();

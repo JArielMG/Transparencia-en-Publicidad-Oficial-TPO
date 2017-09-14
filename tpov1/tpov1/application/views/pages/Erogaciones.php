@@ -1,6 +1,6 @@
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 <center>
@@ -67,7 +67,7 @@
 <div
      data-step="4"
      data-intro="Se muestran las erogaciones del sujeto obligado por mes.">
-   <iframe src="graphs/erogaciones/index.php" frameborder="0" scrolling="no" onload="resizeIframe(this)" style="width:90%;height:400px;" /> 
+   <iframe src="<?php echo base_url(); ?>graphs/erogaciones/index.php" frameborder="0" scrolling="no" onload="resizeIframe(this)" style="width:90%;height:400px;" /> 
 </div>
    </iframe>
    </center>
@@ -99,7 +99,7 @@
 </div>
 </center>
 
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
 
 <script>
 	$('#Ejercicio').change(function() {

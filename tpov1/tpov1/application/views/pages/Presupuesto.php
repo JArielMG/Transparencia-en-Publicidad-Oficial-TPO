@@ -8,7 +8,7 @@
    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
    <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 <style>
@@ -48,9 +48,9 @@ span.number-display {
   </style>
 </head>
 <body style="width:90%;margin: 0 auto;">
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -164,7 +164,7 @@ span.number-display {
 ?>
       </div>
    </div>
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
  
 <script>
 $('#Ejercicio').change(function() {

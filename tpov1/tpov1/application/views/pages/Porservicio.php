@@ -1,6 +1,6 @@
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -141,7 +141,7 @@ Muestra el monto gastado en otros servicios relacionados con la comunicación, c
    </div>
 </center>
 
-<script src="graphs/porservicio/js/d3.v3.min.js"></script>
+<script src="<?php echo base_url(); ?>graphs/porservicio/js/d3.v3.min.js"></script>
 <script>
 function dashboard(id, fData){
     var barColor = 'steelblue';
@@ -477,7 +477,7 @@ function dashboard(id, fData){
 ?>
 </div>
 </center>
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
 <script>
 $('#Ejercicio').change(function() {
    window.location = 'Sys_Screen?v=Porservicio&g=pages&e=' + $(this).val();

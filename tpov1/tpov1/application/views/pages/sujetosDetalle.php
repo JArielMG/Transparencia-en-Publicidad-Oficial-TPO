@@ -3,9 +3,9 @@
    <link href='graphs/campanasarbol/css/facebox.css' rel='stylesheet' type='text/css'>
    <script src='graphs/campanasarbol/js/jquery-1.9.1.min.js' type='text/javascript'></script>
 
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 <style>

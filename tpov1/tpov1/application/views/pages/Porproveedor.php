@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
@@ -198,7 +198,7 @@ span.number-display {
    }
 
 </style>
-<link rel="stylesheet" href="graphs/tablero/css/introjs.css" />   
+<link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />   
 
 </head>
 <body>
@@ -276,9 +276,9 @@ span.number-display {
 		    </div>
     </div>
    </center>
-<script src="graphs/porproveedor/js/d3.v2.min.js" charset="utf-8"></script>
-<script src="graphs/porproveedor/js/sankey.js"></script>
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/porproveedor/js/d3.v2.min.js" charset="utf-8"></script>
+<script src="<?php echo base_url(); ?>graphs/porproveedor/js/sankey.js"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
 
 <script>
 
@@ -303,7 +303,7 @@ var sankey = d3.sankey()
 
 var path = sankey.link();
 
-d3.json("data/porproveedor.json", function(energy) {
+d3.json("<?php echo base_url(); ?>data/porproveedor.json", function(energy) {
 
   sankey.nodes(energy.nodes)
       .links(energy.links)

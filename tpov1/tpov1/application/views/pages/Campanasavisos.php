@@ -1,8 +1,8 @@
 <html>
 <head>
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
    <meta charset='utf-8'>
@@ -87,7 +87,7 @@
 </center>
 
 <center data-step="6" data-intro="Muestra las campañas o avisos institucionales al periodo seleccionado">
-    <iframe src="graphs/treemap2/index.php?f=ca_so.json" style="width:100%;height:555px;" frameborder="0" scrolling=auto > </iframe>
+    <iframe src="<?php echo base_url(); ?>graphs/treemap2/index.php?f=ca_so.json" style="width:100%;height:555px;" frameborder="0" scrolling=auto > </iframe>
 </center>
 <center>
 <br><br><br>
@@ -171,6 +171,6 @@
 	   window.location = 'Sys_Screen?v=Campanasavisos&g=pages&e=' + $(this).val();
 	});
 </script>
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
 </body>
 </html>

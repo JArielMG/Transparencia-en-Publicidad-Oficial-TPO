@@ -8,13 +8,13 @@
       <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
       <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-      <script src="graphs/tablero/js/skel.min.js"></script>
-      <script src="graphs/tablero/js/skel-panels.min.js"></script>
-      <script src="graphs/tablero/js/init.js"></script>   
-      <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-      <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-      <link rel="stylesheet" href="graphs/tablero/css/style.css" />
-      <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+      <script src="<?php echo base_url(); ?>graphs/tablero/js/skel.min.js"></script>
+      <script src="<?php echo base_url(); ?>graphs/tablero/js/skel-panels.min.js"></script>
+      <script src="<?php echo base_url(); ?>graphs/tablero/js/init.js"></script>   
+      <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+      <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+      <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/style.css" />
+      <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
       <!--[if lte IE 8]>
       <link rel="stylesheet" href="css/ie/v8.css" />
       <![endif]-->
@@ -213,7 +213,7 @@ TPO Ver. 1c
           var sourcescv = 'data/inicio.csv';
       </script>
       <script src='graphs/tablero/js/Dashboard.js' type='text/javascript'></script>
-      <script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+      <script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
    </body>
 </html>
 

@@ -3,9 +3,9 @@
    <link href='graphs/campanasarbol/css/facebox.css' rel='stylesheet' type='text/css'>
    <script src='graphs/campanasarbol/js/jquery-1.9.1.min.js' type='text/javascript'></script>
 
-   <link rel="stylesheet" href="graphs/tablero/css/dc.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/stylenew.css" />
-   <link rel="stylesheet" href="graphs/tablero/css/introjs.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
+   <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
    <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
    <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 <style>
@@ -75,7 +75,7 @@
      </div>
    </div>
 
-    <iframe src="graphs/treemap2/index.php?f=so.json" style="width:100%;height:555px;" frameborder="0" scrolling=auto  
+    <iframe src="<?php echo base_url(); ?>graphs/treemap2/index.php?f=so.json" style="width:100%;height:555px;" frameborder="0" scrolling=auto  
             data-step="4"
             data-intro="Muestra los  sujetos obligados 	que hayan ejercido recursos en publicidad oficial, al periodo seleccionado."> </iframe>
 
@@ -128,7 +128,7 @@
 	   window.location = 'Sys_Screen?v=Sujetos&g=pages&e=' + $(this).val();
 	});
 </script>
-<script src="graphs/tablero/js/intro.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
 
 </body>
 </html>

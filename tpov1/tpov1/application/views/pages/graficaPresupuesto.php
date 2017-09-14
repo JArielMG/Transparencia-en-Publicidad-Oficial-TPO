@@ -1,9 +1,9 @@
 <html>
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="graphs/presupuesto/js/d3.v3.min.js"></script>
+<script src="<?php echo base_url(); ?>graphs/presupuesto/js/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script src="graphs/presupuesto/js/bullet.js"></script>
+<script src="<?php echo base_url(); ?>graphs/presupuesto/js/bullet.js"></script>
 
 <style>
 .d3-tip {
@@ -154,7 +154,7 @@ var tip = d3.tip( )
      }
   });
   
-d3.json("data/presupuesto.json", function(error, data) {
+d3.json("<?php echo base_url(); ?>data/presupuesto.json", function(error, data) {
 
 
    <!--?php $data2 = exportData2ToJson(); ?--->
