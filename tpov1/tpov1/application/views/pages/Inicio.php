@@ -204,15 +204,15 @@ TPO Ver. 1c
             </div>
          </div>
       </div>
-      <script src='graphs/tablero/js/crossfilter.js' type='text/javascript'></script>
-      <script src='graphs/tablero/js/d3.js' type='text/javascript'></script>
-      <script src='graphs/tablero/js/dc.js' type='text/javascript'></script>
-      <script src='graphs/tablero/js/queue.js' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>graphs/tablero/js/crossfilter.js' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>graphs/tablero/js/d3.js' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>graphs/tablero/js/dc.js' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>graphs/tablero/js/queue.js' type='text/javascript'></script>
       <?php $data1 = exportData1ToCsv(); ?>
       <script>
-          var sourcescv = 'data/inicio.csv';
+          var sourcescv = '<?php echo base_url(); ?>data/inicio.csv';
       </script>
-      <script src='graphs/tablero/js/Dashboard.js' type='text/javascript'></script>
+      <script src='<?php echo base_url(); ?>graphs/tablero/js/Dashboard.js' type='text/javascript'></script>
       <script src="<?php echo base_url(); ?>graphs/tablero/js/intro.js" type="text/javascript"></script>
    </body>
 </html>
