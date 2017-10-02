@@ -89,7 +89,7 @@
 	 }
          $data['page'] = getD3D("page_act");
 	 $this->load->view('system/base/bread', $data, FALSE);
-         $data1['ScreenTarget'] = 'Sys_Screen?v='.  getD3D("page_act") . '&g=' . getD3D("group_act");
+         $data1['ScreenTarget'] = 'Sys_Screen?v='.  getD3D("page_act") . '&g=' . getD3D("group_act") . '&e=2017';
          
          $this->load->view("system/base/Iframe", $data1, FALSE);
          $this->load->view("system/base/Footer");
