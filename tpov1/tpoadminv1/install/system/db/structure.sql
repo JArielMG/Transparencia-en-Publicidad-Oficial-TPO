@@ -2126,8 +2126,23 @@ CREATE VIEW `vgasto_clasf_servicio` AS select `b`.`id_servicio_clasificacion` AS
 -- Volcando estructura para vista rusiainf_inai.vgrafica1
 -- Eliminando tabla temporal y crear estructura final de VIEW
 DROP TABLE IF EXISTS `vgrafica1`;
-CREATE VIEW `vgrafica1` AS select `a`.`ejercicio` AS `ejercicio`,`a`.`servicio` AS `servicio`,`a`.`campana` AS `campana`,`a`.`partida` AS `partida`,`a`.`ejercido` AS `ejercido`,`a`.`tipo` AS `tipo`,`a`.`fecha` AS `fecha`,`a`.`proveedor` AS `proveedor`,`a`.`campana_aviso` AS `campana_aviso`,(select (sum(`c`.`monto_presupuesto`) / (select count(0) from `vpregrafica1` `b`)) from `vact_presupuestos_desglose` `c`) AS `presupuesto`,((select (sum(`c`.`monto_presupuesto`) / (select count(0) from `vpregrafica1` `b`)) from `vact_presupuestos_desglose` `c`) + (select (sum(`c`.`monto_modificacion`) / (select count(0) from `vpregrafica1` `b`)) from `vact_presupuestos_desglose` `c`)) AS `modificacion`,(select (count(0) / (select count(0) from `vpregrafica1`)) from `vtab_proveedores` `z` where (`z`.`ejercicio` = `a`.`ejercicio`)) AS `proveedores`,(select (count(0) / (select count(0) from `vpregrafica1`)) from `tab_campana_aviso`) AS `totalcampanas` from `vpregrafica1` `a`;
-
+-- antigua estructura
+-- CREATE VIEW `vgrafica1` AS select `a`.`ejercicio` AS `ejercicio`,`a`.`servicio` AS `servicio`,`a`.`campana` AS `campana`,`a`.`partida` AS `partida`,`a`.`ejercido` AS `ejercido`,`a`.`tipo` AS `tipo`,`a`.`fecha` AS `fecha`,`a`.`proveedor` AS `proveedor`,`a`.`campana_aviso` AS `campana_aviso`,(select (sum(`c`.`monto_presupuesto`) / (select count(0) from `vpregrafica1` `b`)) from `vact_presupuestos_desglose` `c`) AS `presupuesto`,((select (sum(`c`.`monto_presupuesto`) / (select count(0) from `vpregrafica1` `b`)) from `vact_presupuestos_desglose` `c`) + (select (sum(`c`.`monto_modificacion`) / (select count(0) from `vpregrafica1` `b`)) from `vact_presupuestos_desglose` `c`)) AS `modificacion`,(select (count(0) / (select count(0) from `vpregrafica1`)) from `vtab_proveedores` `z` where (`z`.`ejercicio` = `a`.`ejercicio`)) AS `proveedores`,(select (count(0) / (select count(0) from `vpregrafica1`)) from `tab_campana_aviso`) AS `totalcampanas` from `vpregrafica1` `a`;
+-- nueva estructura
+CREATE VIEW vgrafica1 AS
+SELECT a.ejercicio AS ejercicio, a.servicio AS servicio, a.campana AS campana,
+a.partida AS partida,
+(SELECT sum( b.monto_desglose ) as valor2 FROM vact_facturas as f, vact_facturas_desglose as b, vact_ejercicios as c WHERE f.id_factura = b.id_factura AND f.id_ejercicio = c.id_ejercicio and c.ejercicio = a.ejercicio) /
+(SELECT COUNT(0) FROM vpregrafica1 b WHERE ejercicio = a.ejercicio) AS ejercido,
+a.tipo AS tipo, a.fecha AS fecha,
+a.proveedor AS proveedor, a.campana_aviso AS campana_aviso,
+( (select sum(original) as "valor1" from vtab_presupuesto where ejercicio = a.ejercicio) / (SELECT COUNT(0) FROM vpregrafica1 b WHERE ejercicio = a.ejercicio) ) AS presupuesto,
+( select sum(presupuesto) as "valor3" from vtab_presupuesto where ejercicio = a.ejercicio) / (SELECT COUNT(0) FROM vpregrafica1 b WHERE ejercicio = a.ejercicio) AS modificacion,
+( select count(0) as valor1 from vtab_proveedores WHERE ejercicio = a.ejercicio AND nombre NOT IN ("Análisis, estudios y métricas", "Gastos de propaganda e Imagen", "Impresiones", "Internet", "Medios impresos", "Producción de contenidos", "Radio", "Televisión", "Contratos", "Órdenes de compra")
+) / (SELECT COUNT(0) FROM vpregrafica1 b
+where b.ejercicio = a.ejercicio and proveedor NOT IN ('Análisis, estudios y métricas', 'Gastos de propaganda e Imagen', 'Impresiones', 'Internet', 'Medios impresos', 'Producción de contenidos', 'Radio', 'Televisión', 'Contratos', 'Órdenes de compra')) AS proveedores,
+( SELECT COUNT( * ) as valor1 FROM vact_campana_aviso c, vact_ejercicios as b, cat_ejercicios e WHERE c.id_campana_tipo IN (1,2) AND c.id_ejercicio = b.id_ejercicio AND b.id_ejercicio = e.id_ejercicio AND e.ejercicio = a.ejercicio) / (SELECT COUNT(0) FROM vpregrafica1 b where b.ejercicio = a.ejercicio) AS totalcampanas
+FROM vpregrafica1 a;
 
 -- Volcando estructura para vista rusiainf_inai.vlimite
 -- Eliminando tabla temporal y crear estructura final de VIEW
