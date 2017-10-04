@@ -819,18 +819,11 @@ c.denominacion as "Denominación de cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por partida",
 (select sum(IFNULL(b.monto_desglose, 0)) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
 a.id_presupuesto_concepto = e.id_presupuesto_concepto and a.id_ejercicio = d.id_ejercicio ) as "Presupuesto ejercido al periodo"
-from 
-tab_presupuestos as d,
-tab_presupuestos_desglose as e,
-cat_presupuesto_conceptos as c,
-cat_ejercicios as g
-where
-e.id_presupuesto = d.id_presupuesto and
-e.id_presupuesto_concepto = c.id_presupesto_concepto and
-d.id_ejercicio = g.id_ejercicio
-group by 
-e.id_presupuesto_concepto,
-e.periodo';
+from tab_presupuestos as d
+JOIN tab_presupuestos_desglose e ON e.id_presupuesto = d.id_presupuesto
+JOIN cat_presupuesto_conceptos c ON c.id_presupesto_concepto = e.id_presupuesto_concepto
+JOIN cat_ejercicios g ON g.id_ejercicio = d.id_ejercicio
+GROUP BY g.ejercicio, e.id_presupuesto_concepto;';
 /*e.id_presupuesto,
 d.denominacion';*/
 
