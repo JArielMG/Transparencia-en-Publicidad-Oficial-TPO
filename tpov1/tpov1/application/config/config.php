@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 if (ENV === 'dev') {
-   $config['base_url'] = 'http://localhost/html/tpov1/tpov2/';
+   $config['base_url'] = IURL_ROOT;
 } else {
    $config['base_url'] = 'http://www.itback.com.mx/tpov2/';
 }
