@@ -811,9 +811,9 @@ c.capitulo as "Clave del concepto",
 sum(IFNULL(e.monto_presupuesto, 0)) as "Presupuesto asignado por concepto",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por concepto",
 (SELECT monto from 
-( select sum(IFNULL(b.monto_desglose, 0)) AS monto, a.id_presupuesto_concepto, b.periodo from tab_facturas as a, tab_facturas_desglose as b 
-   where a.id_factura = b.id_factura group by a.id_presupuesto_concepto, b.periodo) pr
-WHERE pr.id_presupuesto_concepto = e.id_presupuesto_concepto AND pr.periodo = e.periodo ) as "Presupuesto total ejercido por concepto", 
+( select sum(IFNULL(b.monto_desglose, 0)) AS monto, a.id_presupuesto_concepto from tab_facturas as a, tab_facturas_desglose as b 
+   where a.id_factura = b.id_factura group by a.id_presupuesto_concepto) pr
+WHERE pr.id_presupuesto_concepto = e.id_presupuesto_concepto ) as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))) as "Presupuesto total asignado a cada partida",
 (sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por partida",
@@ -823,7 +823,8 @@ from tab_presupuestos as d
 JOIN tab_presupuestos_desglose e ON e.id_presupuesto = d.id_presupuesto
 JOIN cat_presupuesto_conceptos c ON c.id_presupesto_concepto = e.id_presupuesto_concepto
 JOIN cat_ejercicios g ON g.id_ejercicio = d.id_ejercicio
-GROUP BY g.ejercicio, e.id_presupuesto_concepto;';
+GROUP BY g.ejercicio, e.id_presupuesto_concepto';
+
 /*e.id_presupuesto,
 d.denominacion';*/
 
