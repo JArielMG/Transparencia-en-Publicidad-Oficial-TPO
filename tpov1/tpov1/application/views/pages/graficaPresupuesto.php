@@ -154,10 +154,10 @@ var tip = d3.tip( )
      }
   });
   
-   <?php $data2 = exportData2ToJson(); ?>
 d3.json("<?php echo base_url(); ?>data/presupuesto.json", function(error, data) {
 
 
+   <!--?php $data2 = exportData2ToJson(); ?--->
 
 //   d3.json("<?php echo URL_ROOT; ?>graphs/data2.json", function(error, data) {
 
