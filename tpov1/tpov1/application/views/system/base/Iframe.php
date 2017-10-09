@@ -6,7 +6,7 @@ die();
 <?php
    if ( $ScreenTarget == "Sys_Screen?v=Inicio&g=pages/") {
 ?>
-<iframe scrolling=no src="<?php echo $ScreenTarget; ?>" style="width:100%;" frameborder="0" id="myframe"
+<iframe scrolling=no src="<?php echo $ScreenTarget; ?>" style="width:100%; height: 950px;" frameborder="0" id="myframe"
         onload="this.style.height = '950px';"> </iframe>
 <?php
   } else {
