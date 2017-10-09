@@ -11,7 +11,7 @@ die();
 <?php
   } else {
 ?>
-<iframe scrolling=no src="<?php echo $ScreenTarget; ?>" style="width:100%;" frameborder="0" id="myframe"
+<iframe src="<?php echo $ScreenTarget; ?>" style="width:100%;" frameborder="0" id="myframe"
         onload="this.style.height = this.contentWindow.document.body.scrollHeight + 22 + 'px';"> </iframe>
 <?php
    }
