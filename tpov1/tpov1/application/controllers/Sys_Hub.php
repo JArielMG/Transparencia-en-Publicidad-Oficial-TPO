@@ -12,31 +12,31 @@
       }
 
       private function limpiarCadena($valor){
-	$valor = str_ireplace("javascript:alert","",$valor);
-	$valor = str_ireplace("alert","",$valor);
-	$valor = str_ireplace("SELECT","",$valor);
-        $valor = str_ireplace("INSERT","",$valor); 
-	$valor = str_ireplace("COPY","",$valor);
-	$valor = str_ireplace("DELETE","",$valor);
-	$valor = str_ireplace("DROP","",$valor);
-	$valor = str_ireplace("DUMP","",$valor);
-	$valor = str_ireplace(" OR ","",$valor);
-	$valor = str_ireplace(" AND ","",$valor);
-	$valor = str_ireplace("%","",$valor);
-	$valor = str_ireplace("LIKE","",$valor);
-	$valor = str_ireplace("--","",$valor);
-	$valor = str_ireplace("^","",$valor);
-	$valor = str_ireplace("[","",$valor);
-	$valor = str_ireplace("]","",$valor);
-	$valor = str_ireplace("\\","",$valor);
-	$valor = str_ireplace("!","",$valor);
-	$valor = str_ireplace("¡","",$valor);
-	$valor = str_ireplace("?","",$valor);
-	$valor = str_ireplace("=","",$valor);
-	$valor = str_ireplace("&","",$valor);
-	$valor = str_ireplace("<?php","",$valor);
-	$valor = str_ireplace("?>","",$valor);
-	return $valor;
+      	$valor = str_ireplace("javascript:alert","",$valor);
+      	$valor = str_ireplace("alert","",$valor);
+      	$valor = str_ireplace("SELECT","",$valor);
+         $valor = str_ireplace("INSERT","",$valor); 
+      	$valor = str_ireplace("COPY","",$valor);
+      	$valor = str_ireplace("DELETE","",$valor);
+      	$valor = str_ireplace("DROP","",$valor);
+      	$valor = str_ireplace("DUMP","",$valor);
+      	$valor = str_ireplace(" OR ","",$valor);
+      	$valor = str_ireplace(" AND ","",$valor);
+      	$valor = str_ireplace("%","",$valor);
+      	$valor = str_ireplace("LIKE","",$valor);
+      	$valor = str_ireplace("--","",$valor);
+      	$valor = str_ireplace("^","",$valor);
+      	$valor = str_ireplace("[","",$valor);
+      	$valor = str_ireplace("]","",$valor);
+      	$valor = str_ireplace("\\","",$valor);
+      	$valor = str_ireplace("!","",$valor);
+      	$valor = str_ireplace("¡","",$valor);
+      	$valor = str_ireplace("?","",$valor);
+      	$valor = str_ireplace("=","",$valor);
+      	$valor = str_ireplace("&","",$valor);
+      	$valor = str_ireplace("<?php","",$valor);
+      	$valor = str_ireplace("?>","",$valor);
+      	return $valor;
       }
 
       private function mysql_escape_mimic($inp) { 
@@ -60,6 +60,8 @@
          }
 
          $data['fechaact'] = $this->fechaact->get();
+         $maxEjercicio = $this->fechaact->maxEjercicio();
+
          initSessionD3D();
          resetDebugD3D();
          if (isset($_GET['v'])) {
@@ -75,21 +77,22 @@
          }
 
          if (strlen(trim($group_act))==0) {
-	    setD3D("group_act",  "");
-	 } else {
+      	   setD3D("group_act",  "");
+      	} else {
             setD3D("group_act",  $group_act . "/");
          }	 
 
          setD3D("page_title", $this->lang->line( 'title_' . getD3D("page_act") ));  
-	 $this->load->view('system/base/Top');
-	 $this->load->view('system/base/Menu', $data, FALSE);
+	      $this->load->view('system/base/Top');
+	      $this->load->view('system/base/Menu', $data, FALSE);
          if (getD3D("page_act")=='') {
-	    setD3D("group_act", "pages/");
-	    setD3D("page_act",  "Inicio");
-	 }
+   	     setD3D("group_act", "pages/");
+   	     setD3D("page_act",  "Inicio");
+   	   }
+
          $data['page'] = getD3D("page_act");
-	 $this->load->view('system/base/bread', $data, FALSE);
-         $data1['ScreenTarget'] = 'Sys_Screen?v='.  getD3D("page_act") . '&g=' . getD3D("group_act") . '&e=2017';
+	      $this->load->view('system/base/bread', $data, FALSE);
+         $data1['ScreenTarget'] = 'Sys_Screen?v='.  getD3D("page_act") . '&g=' . getD3D("group_act") . '&e=' . $maxEjercicio;
          
          $this->load->view("system/base/Iframe", $data1, FALSE);
          $this->load->view("system/base/Footer");

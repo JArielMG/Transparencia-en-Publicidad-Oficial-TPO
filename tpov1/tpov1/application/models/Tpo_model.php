@@ -71,6 +71,16 @@ class Tpo_model extends CI_Model
 		return $this->db->from($this->_table)->count_all_results();
 	}
 
+    public function maxEjercicio(){
+      	$data = $this->db->query( "SELECT max(ejercicio) as ejercicio from cat_ejercicios" )->result();
+
+      	foreach($data as $cuantos) {
+	        $total = $cuantos->ejercicio; 
+    	}      
+        
+        return $total;
+    }
+
 	public function update($data = array(), $var, $valor )
 	{
 		$this->db->set($data);
