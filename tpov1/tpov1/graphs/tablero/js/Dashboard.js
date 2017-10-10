@@ -190,5 +190,6 @@ function makeGraphs(error, apiData) {
                  .yAxis().tickFormat(d3.format("s"));
 
     dc.renderAll();
+     selectField.onChange( $(".dc-select-menu option:last").val() )
 };
 

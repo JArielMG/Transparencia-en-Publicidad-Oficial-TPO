@@ -7217,7 +7217,6 @@ dc.rowChart = function (parent, chartGroup) {
         removeElements(rows);
         updateElements(rows);
 
-console.log("Grafica",_chart);
 /*LFC4*/
    var svg_temp = _chart.svg();
    var xlabel = "Monto ejercido en mdp";
