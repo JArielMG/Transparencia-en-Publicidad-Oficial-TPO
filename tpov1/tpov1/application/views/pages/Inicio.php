@@ -30,6 +30,7 @@
          }
          #wrapper {
          margin: 0 auto;
+         height: 1000px;   
          }
          .chart-title a {
          color: #01AECE;
