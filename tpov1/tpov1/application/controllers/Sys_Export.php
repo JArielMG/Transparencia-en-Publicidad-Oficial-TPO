@@ -808,17 +808,19 @@ concat(g.ejercicio,"-",c.partida) as id_respecto_presupuesto,
 c.partida as "Partida genérica",
 c.capitulo as "Clave del concepto",
 (select f.denominacion from cat_presupuesto_conceptos as f where f.capitulo = c.capitulo and trim(f.concepto="") and trim(f.partida="")) as "Nombre del concepto",
-sum(IFNULL(e.monto_presupuesto, 0)) as "Presupuesto asignado por concepto",
-(sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por concepto",
-(SELECT monto from 
-( select sum(IFNULL(b.monto_desglose, 0)) AS monto, a.id_presupuesto_concepto from tab_facturas as a, tab_facturas_desglose as b 
-   where a.id_factura = b.id_factura group by a.id_presupuesto_concepto) pr
-WHERE pr.id_presupuesto_concepto = e.id_presupuesto_concepto ) as "Presupuesto total ejercido por concepto", 
+IFNULL(sum(e.monto_presupuesto), 0) as "Presupuesto asignado por concepto",
+(IFNULL(sum(e.monto_presupuesto), 0)+IFNULL(sum(e.monto_modificacion), 0)) as "Presupuesto modificado por concepto",
+( select IFNULL(sum(b.monto_desglose), 0) from tab_facturas as a, tab_facturas_desglose as b 
+   where a.id_factura = b.id_factura 
+   and a.id_presupuesto_concepto = e.id_presupuesto_concepto 
+   and a.id_ejercicio = d.id_ejercicio) as "Presupuesto total ejercido por concepto", 
 c.denominacion as "Denominación de cada partida",
-(sum(IFNULL(e.monto_presupuesto, 0))) as "Presupuesto total asignado a cada partida",
-(sum(IFNULL(e.monto_presupuesto, 0))+sum(IFNULL(e.monto_modificacion, 0))) as "Presupuesto modificado por partida",
-(select sum(IFNULL(b.monto_desglose, 0)) from tab_facturas as a, tab_facturas_desglose as b where a.id_factura = b.id_factura and
-a.id_presupuesto_concepto = e.id_presupuesto_concepto and a.id_ejercicio = d.id_ejercicio ) as "Presupuesto ejercido al periodo"
+(IFNULL(sum(e.monto_presupuesto), 0)) as "Presupuesto total asignado a cada partida",
+(IFNULL(sum(e.monto_presupuesto), 0) + IFNULL(sum(e.monto_modificacion), 0)) as "Presupuesto modificado por partida",
+(select IFNULL(sum(b.monto_desglose), 0) from tab_facturas as a, tab_facturas_desglose as b 
+where a.id_factura = b.id_factura 
+and a.id_presupuesto_concepto = e.id_presupuesto_concepto and a.id_ejercicio = d.id_ejercicio 
+and a.id_trimestre = (select max(a2.id_trimestre) from tab_facturas as a2 where  a2.id_ejercicio = d.id_ejercicio) ) as "Presupuesto ejercido al periodo"
 from tab_presupuestos as d
 JOIN tab_presupuestos_desglose e ON e.id_presupuesto = d.id_presupuesto
 JOIN cat_presupuesto_conceptos c ON c.id_presupesto_concepto = e.id_presupuesto_concepto
