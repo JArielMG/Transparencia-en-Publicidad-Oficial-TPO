@@ -55,7 +55,7 @@ Delegación Coyoacán, C.P. 04000</p>
     <div class="row">
         <div class="col-md-12 espacio">
         <div id="pleca-footer"></div>
-        <p class="bottomFooter">Transparencia en publicidad oficial - TPO Ver. 1.0a. Es una plataforma de código abierto basada en el prototipo funcional desarrollado por el Gobierno del Estado de Oaxaca 2011 – 2016 y Fundar.</p>
+        <p class="bottomFooter">Transparencia en publicidad oficial - TPO Ver. 1.0c. Es una plataforma de código abierto basada en el prototipo funcional desarrollado por el Gobierno del Estado de Oaxaca 2011 – 2016 y Fundar.</p>
         </div>
     </div>
     </div>
