@@ -2,7 +2,7 @@
 
 // General
 $lang["lbl_title"]     = "Transparencia en publicidad oficial";
-$lang["lbl_ver"]       = "Ver. 1.0a";
+$lang["lbl_ver"]       = "Ver. 1.0c";
 
 // Login
 $lang["lbl_login"]     = "Acceso";
