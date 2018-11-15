@@ -702,11 +702,14 @@ if(isset($_POST['configAdmin'])){
                    $theQueryOne = mysqli_query($dbConnect, "
                    INSERT INTO `sec_users` 
                    (`id_user`, `username`, `password`, `cookie_id`, `token`, `email`, `fname`, `lname`, 
-                   `public_office`, `phone`, `created`, `lastlogin`, `lastip`, `notes`, `record_user`, `last_update`, `active`) 
+                   `public_office`, `phone`, `created`, `lastlogin`, `lastip`, `notes`, `record_user`, `active`) 
                    VALUES ( 1, '$userName', '$newPassword', '0', '0', '$adminEmail', '$fullNames', '$apellidosNames', 
-                   '', '', NULL, NULL, '127.0.0.1', NULL, 1, NOW(), 'a')");
-                }
-
+                   '', '', NULL, NULL, '127.0.0.1', NULL, 1, 'a')");
+                   $theQueryTwo = mysqli_query($dbConnect, "
+                   INSERT INTO `fecha_act`
+                   (`last_update`) 
+                   VALUES (NOW())");
+                } 
 
                 if ($theQueryOne == TRUE){
                     $error = '

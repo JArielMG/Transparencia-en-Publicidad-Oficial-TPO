@@ -30,9 +30,6 @@
     $xcrud->change_type('public_office', 'password', 'sha1');
     $xcrud->change_type('created', 'password', 'sha1');
     $xcrud->change_type('lastlogin', 'password', 'sha1');
-    $xcrud->change_type('lastip', 'password', 'sha1');
-    $xcrud->change_type('notes', 'password', 'sha1');
-    $xcrud->change_type('last_update', 'password', 'sha1');
     $xcrud->change_type('active','select','',array('a'=>'Activo','i'=>'Inactivo'));    
     $xcrud->relation('record_user','tab_sujetos_obligados','id_sujeto_obligado','nombre_sujeto_obligado');
     $xcrud->change_type('password', 'password', 'sha1');

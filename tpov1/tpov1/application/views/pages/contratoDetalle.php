@@ -51,7 +51,6 @@ if (isset($_GET['contrato'])) {
     $xcrud->label('fecha_fin','Fecha de término');
     $xcrud->label('file_contrato','Vínculo al archivo del contrato');
     $xcrud->label('descripcion_justificacion','Motivo de adjudicación');
-
     $xcrud->label('fecha_validacion','Fecha de validación');
     $xcrud->label('area_responsable','Área responsable de la información');
     $xcrud->label('periodo','Año');
@@ -87,14 +86,12 @@ if (isset($_GET['contrato'])) {
     $xcrud->column_tooltip('Monto total','Suma del monto original del contrato, más el monto modificado.');
     $xcrud->column_tooltip('Monto pagado','Monto pagado al periodo publicado.');
     $xcrud->column_tooltip('active','Indica el estado de la información correspondiente al registro, “Activa” o “Inactiva”.');
-
     $xcrud->column_tooltip('id_proveedor','Nombre o razón social del proveedor');
     $xcrud->column_tooltip('descripcion_justificacion','Descripción breve de los motivos que justifican la elección del proveedor');
     $xcrud->column_tooltip('fecha_celebracion','Fecha de firma de contrato, con el formato dd/mm/aaaa (por ej. 31/03/2016)');
     $xcrud->column_tooltip('objeto_contrato','Indica el objeto del contrato');
     $xcrud->column_tooltip('id_procedimiento','Indica el tipo de procedimiento de contratación  [licitación pública, adjudicación directa, invitación restringida]');
     $xcrud->column_tooltip('fundamento_juridico','Fundamento jurídico del procedimiento de contratación');
-
     $xcrud->column_tooltip('fecha_inicio','Indica la fecha de inicio de los servicios contratados, con el formato dd/mm/aaaa (por ej. 31/03/2016)');
     $xcrud->column_tooltip('fecha_fin','Indica la fecha de término de los servicios contratados, con el formato dd/mm/aaaa (por ej. 31/03/2016)');
     $xcrud->column_tooltip('file_contrato','Archivo contrato en PDF');

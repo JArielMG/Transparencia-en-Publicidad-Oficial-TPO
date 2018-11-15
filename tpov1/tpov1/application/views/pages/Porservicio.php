@@ -1,145 +1,142 @@
    <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/dc.css" />
    <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/stylenew.css" />
    <link rel="stylesheet" href="<?php echo base_url(); ?>graphs/tablero/css/introjs.css" />
-   <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-   <!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 <style>
-path {  stroke: #fff; }
-path:hover {  opacity:0.9; }
-rect:hover {  fill:blue; }
-.axis {  font: 10px sans-serif; }
-.legend tr{    border-bottom:1px solid grey; }
-.legend tr:first-child{    border-top:1px solid grey; }
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {  display: none; }
-.legend{
-    margin-bottom:7px;
-    display:block;
-    border-collapse: collapse;
-    border-spacing: 0px;
-    margin-left: 35%;
-    margin-top: 25px;
-}
-.legend td{
-    padding:4px 5px;
-    vertical-align:bottom;
-}
-.legendFreq {
-    align:right;
-    width:100px;
-}
-.legendPerc{
-    align:right;
-    width:50px;
-}
-
+	path {  stroke: #fff; }
+	path:hover {  opacity:0.9; }
+	rect:hover {  fill:blue; }
+	.axis {  font: 10px sans-serif; }
+	.legend tr{    border-bottom:1px solid grey; }
+	.legend tr:first-child{    border-top:1px solid grey; }
+	.axis path,
+	.axis line {
+  		fill: none;
+  		stroke: #000;
+  		shape-rendering: crispEdges;
+	}
+	.x.axis path {  display: none; }
+	.legend{
+    	margin-bottom:7px;
+    	display:block;
+    	border-collapse: collapse;
+    	border-spacing: 0px;
+    	margin-left: 35%;
+    	margin-top: 25px;
+	}
+	.legend td{
+    	padding:4px 5px;
+    	vertical-align:bottom;
+	}
+	.legendFreq {
+    	align:right;
+    	width:100px;
+	}
+	.legendPerc{
+    	align:right;
+    	width:50px;
+	}
    .intro_button{
-      margin-top: 38px;
-      margin: center;
-      background-color: #01AECE;
-      color: white;
-   }
-   #wrapper {
-      margin: 0 auto;
-  }
-   table {
-      font-size: small !important;
-   }
-
-  @media (max-width: 400px) {
-    #dashboard { display: none; }
-  }
-   
+     	margin-top: 38px;
+      	margin: center;
+      	background-color: #01AECE;
+      	color: white;
+   	}
+   	#wrapper {
+      	margin: 0 auto;
+  	}
+   	table {
+      	font-size: small !important;
+   	}
+  	@media (max-width: 400px) {
+    	#dashboard { display: none; }
+  	}
+  	.cen {
+    	text-align: center;
+    }
+    .cen-cifr {
+    	position: relative;
+    	margin: auto;
+    }
 </style>
 
-      <center>
-            <div class="col-md-12 espacio">
-                 <h3 class="docs-header">.</h3>
-                 <div class="btn-group" aria-label="Basic example" role="group">
-                    <a class="btn-outline-ayuda" role="button" href="#" autofocus onclick="javascript:introJs().setOption('showProgress', true).start();">
-                      Ayuda
-                    </a>
-                    <a class="btn-outline-descarga" role="button" href="Sys_Export?exp=porservicio" data-step="6"
-            data-intro="Datos abiertos: descarga los datos publicados en esta página en formato CSV para facilitar su uso y reutilización.">
+    <div class="col-md-12 cen espacio">
+	    <h3 class="docs-header">.</h3>
+        <div class="btn-group" aria-label="Basic example" role="group">
+    	    <a class="btn-outline-ayuda" role="button" href="#" autofocus onclick="javascript:introJs().setOption('showProgress', true).start();">
+        	    Ayuda
+            </a>
+            <a class="btn-outline-descarga" role="button" href="Sys_Export?exp=porservicio" data-step="6"
+            	data-intro="Datos abiertos: descarga los datos publicados en esta página en formato CSV para facilitar su uso y reutilización.">
                        Descargar Datos
-                    </a>
-                </div>
-            </div>
-      </center>
+            </a>
+        </div>
+	</div>
+	<br><br><br>
+	<div class="row cen-cifr" style="width:1000px;">
+    	<div class="2u chart-wrapper dc-chart"  data-step="1"
+        	data-intro="Ejercicio<br> Selecciona un ejercicio fiscal para visualizar las cifras correspondientes a ese año. También puedes seleccionar “Todos” los años."                  
+           	style="width:300px;float:left;height:77px;" id="Ejercido"> 
+        		<div class="chart-title" style="margin-top:-3;">
+        			<strong> Ejercicio </strong> 
+        		</div> 
+        	<select class="dc-select-menu" id="Ejercicio" >
+           		<option value="">Todos</option>
+           		<?php echo getD3D("ListaEjercicios"); ?>
+        	</select>
+      	</div>     
+      	<div class="2u chart-wrapper dc-chart" data-step="2"
+        	data-intro="Monto gastado de servicios de difusión en medios de comunicación $<br><br>
+			Muestra el monto gastado en servicios de difusión, estos pueden ser: radio, televisión, cine, medios impresos, medios complementarios, Internet, otros, en el periodo seleccionado."                  
+           	style="width:300px;float:left;height:77px;" id="Ejercido"> 
+        		<div class="chart-title"> 
+        			<strong>Monto gastado de servicios de <br>difusión en medios de comunicación $</strong>
+        		</div> 
+           		<span class="number-display"><?php echo number_format(getD3D("indicador1"),0,',',','); ?> k</span>
+      	</div>
+	    <div class="2u chart-wrapper dc-chart" data-step="3"
+    		data-intro="Monto gastado en otros servicios asociados a la comunicación $<br><br>
+			Muestra el monto gastado en otros servicios relacionados con la comunicación, como son: producción de contenidos, impresiones, estudios y métricas, en el periodo seleccionado."           
+           	style="width:300px;float:left;height:77px;" id="Ejercido">        
+        		<div class="chart-title">
+        			<strong>Monto gastado en otros <br>servicios asociados a la comunicación $</strong>
+        		</div> 
+           		<span class="number-display"><?php echo number_format(getD3D("indicador2"),0,',',','); ?> k</span>
+      	</div>
+	</div>
+	<br><br><br><br><br><br>
 
-   <center>
-   <div class="row" style="width:1000px;">
-      <div class="2u chart-wrapper dc-chart"  data-step="1"
-           data-intro="Ejercicio<br> Selecciona un ejercicio fiscal para visualizar las cifras correspondientes a ese año. También puedes seleccionar “Todos” los años."                  
-           style="width:300px;float:left;height:77px;" id="Ejercido"> 
-        <div class="chart-title" style="margin-top:-3;"> <strong> Ejercicio </strong> </div> 
-        <select class="dc-select-menu" id="Ejercicio" >
-           <option value="">Todos</option>
-           <?php echo getD3D("ListaEjercicios"); ?>
-        </select>
-      </div>     
-      <div class="2u chart-wrapper dc-chart" data-step="2"
-           data-intro="Monto gastado de servicios de difusión en medios de comunicación $<br><br>
-Muestra el monto gastado en servicios de difusión, estos pueden ser: radio, televisión, cine, medios impresos, medios complementarios, Internet, otros, en el periodo seleccionado."                  
-           style="width:300px;float:left;height:77px;" id="Ejercido"> 
-        <div class="chart-title"> <strong>Monto gastado de servicios de <br>difusión en medios de comunicación $</strong></div> 
-           <span class="number-display"><?php echo number_format(getD3D("indicador1"),0,',',','); ?> k</span>
-      </div>
+	<table class="cen-cifr" style="width:777px;">
+		<tr>
+			<td>1) Servicios de difusión en medios de comunicación</td>
+			<td>2) Otros servicios asociados a la comunicación</td>
+		</tr>
+		<tr>
+			<td>* Radio</td>
+			<td>* Producción de contenidos</td>
+		</tr>
+		<tr>
+			<td>* Televisión</td>
+			<td>* Impresiones</td>
+		</tr>
+		<tr>
+			<td>* Cine</td>
+			<td>* Análisis, estudios y métricas</td>
+		</tr>
+		<tr>
+			<td>* Medios impresos</td>
+		</tr>
+		<tr>
+			<td>* Medios complementarios</td>
+		</tr>
+		<tr>
+			<td>* Internet</td>
+		</tr>
+	</table>
 
-      <div class="2u chart-wrapper dc-chart" data-step="3"
-           data-intro="Monto gastado en otros servicios asociados a la comunicación $<br><br>
-Muestra el monto gastado en otros servicios relacionados con la comunicación, como son: producción de contenidos, impresiones, estudios y métricas, en el periodo seleccionado."           
-           style="width:300px;float:left;height:77px;" id="Ejercido">        
-        <div class="chart-title"> <strong>Monto gastado en otros <br>servicios asociados a la comunicación $</strong></div> 
-           <span class="number-display"><?php echo number_format(getD3D("indicador2"),0,',',','); ?> k</span>
-      </div>
-     </div>
-   </div>
-<br><br><br><br><br><br>
-<center>
-<table style="width:777px;">
-<tr>
-<td>1) Servicios de difusión en medios de comunicación</td>
-<td>2) Otros servicios asociados a la comunicación</td>
-</tr>
-<tr>
-<td>* Radio</td>
-<td>* Producción de contenidos</td>
-</tr>
-<tr>
-<td>* Televisión</td>
-<td>* Impresiones</td>
-</tr>
-<tr>
-<td>* Cine</td>
-<td>* Análisis, estudios y métricas</td>
-</tr>
-<tr>
-<td>* Medios impresos</td>
-</tr>
-<tr>
-<td>* Medios complementarios</td>
-</tr>
-<tr>
-<td>* Internet</td>
-</tr>
-</table>
-
-
-
-
-   <div id='dashboard' data-step="4" data-intro="Gráfica<br>Muestra el gasto por tipo de difusión: radio, televisión, cine, medios impresos, medios complementarios, Internet, otros, en el periodo seleccionado, en el periodo seleccionado.">
-   </div>
-</center>
+	<div class="cen" id='dashboard' data-step="4" data-intro="Gráfica<br>Muestra el gasto por tipo de difusión: radio, televisión, cine, medios impresos, medios complementarios, Internet, otros, en el periodo seleccionado, en el periodo seleccionado.">
+   	</div>
 
 <script src="<?php echo base_url(); ?>graphs/porservicio/js/d3.v3.min.js"></script>
 <script>

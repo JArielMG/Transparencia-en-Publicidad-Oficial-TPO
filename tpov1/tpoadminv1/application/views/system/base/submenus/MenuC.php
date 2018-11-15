@@ -42,18 +42,6 @@
    $so_tipo = getD3D('so_tipo');
    $so_act  = getD3D('so_act');
 ?>
-   <!--nav class="pushy pushy-left">
-      <ul>
-         <li><a href="Sys_Hub?v=facturas&g=system/catalogs">Facturas</a></li>
-         <li><a href="Sys_Hub?v=ordenes&g=system/catalogs">Ordenes Compra</a></li>
-         <li><a href="Sys_Hub?v=Mensajes&g=system/catalogs">Mensajes</a></li>
-         <li><a href="Sys_Hub?v=Catalogs&g=system/catalogs">Catalogos</a></li>
-         <li><a href="Sys_Hub?v=Estados&g=system/catalogs">Estados</a></li>
-         <li><a href="Sys_Hub?v=Sec_users&g=security/data/">Usuario</a></li>
-         <li><a href="Sys_Hub?v=Log&g=system/catalogs">Log</a></li>
-         <li><a href="Sec_Login">Salir</a></li>
-      </ul>
-   </nav-->
    <div class="site-overlay"></div>
    <div class="page">
       <br>	        

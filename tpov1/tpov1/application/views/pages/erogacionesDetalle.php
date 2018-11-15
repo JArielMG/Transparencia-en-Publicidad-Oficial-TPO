@@ -26,7 +26,6 @@ if (isset($_GET['factura'])) {
     $facturas->unset_add();
     $facturas->unset_list();
     $facturas->unset_remove();
-
     
     $facturas->after_upload('after_upload_factura', 'functions.php');
     $facturas->before_insert('validateFacturaI', 'functions.php');
@@ -37,7 +36,7 @@ if (isset($_GET['factura'])) {
     $facturas->subselect('monto_total','SELECT SUM(monto_desglose) FROM tab_facturas_desglose WHERE id_factura = {id_factura} and active=1');
     $facturas->readonly('monto_total');
 
-    $facturas->fields('id_proveedor, Nombre comercial del proveedor, id_contrato, id_orden_compra, id_ejercicio, id_trimestre, id_so_contratante, id_presupuesto_concepto, numero_factura, file_factura_pdf, file_factura_xml, fecha_erogacion, Monto total');
+    $facturas->fields('id_proveedor, Nombre comercial del proveedor, id_contrato, id_orden_compra, id_ejercicio, id_trimestre, id_so_contratante, id_presupuesto_concepto, numero_factura, file_factura_pdf, file_factura_xml, fecha_erogacion, Monto total, nota');
 
     $facturas->label('id_proveedor','Proveedor');
     $facturas->label('id_contrato','Contrato');
@@ -79,11 +78,10 @@ if (isset($_GET['factura'])) {
     $facturas->field_tooltip('area_responsable','Área administrativa encargada de solicitar el servicio');
 
     $facturas->field_tooltip('Nombre comercial del proveedor','Indica el nombre comercial del proveedor del producto o servicio.');
-
     $facturas->field_tooltip('id_contrato','Clave o número de identificación único del contrato.');
-    $facturas->field_tooltip('id_orden_compra','lave o número de identificación único de la orden de compra.');
+    $facturas->field_tooltip('id_orden_compra','Clave o número de identificación único de la orden de compra.');
     $facturas->field_tooltip('id_ejercicio','Indica el año del ejercicio presupuestario.');
-    $facturas->field_tooltip('id_trimestre','Indica el trimestre que se reporta (enero – marzo, abril-junio, julio-septiembre,  octubre-diciembre ).');
+    $facturas->field_tooltip('id_trimestre','Indica el trimestre que se reporta (enero-marzo, abril-junio, julio-septiembre, octubre-diciembre ).');
     $facturas->field_tooltip('id_so_contratante','Indica el nombre del sujeto obligado que celebra el contrato u orden de compra con el proveedor.');
     $facturas->field_tooltip('id_presupuesto_concepto','Indica la clave y el nombre del concepto o partida presupuestal.');
     $facturas->field_tooltip('numero_factura','Clave única de la erogación o factura.');
@@ -91,9 +89,9 @@ if (isset($_GET['factura'])) {
     $facturas->field_tooltip('file_factura_pdf','Archivo electrónico de la factura en formato PDF.');
     $facturas->field_tooltip('file_factura_xml','Archivo electrónico de la factura en formato XML.');
     $facturas->field_tooltip('active','Indica el estado de la información correspondiente al registro, “Activa” o “Inactiva”.');
+    $facturas->field_tooltip('nota','Nota.');
 
     $facturas->column_pattern('file_factura_pdf', '<a href="'.URL_DOCS.'data/facturas/{file_factura_pdf}" target="_new_file_factura_pdf">{file_factura_pdf}</a>');
-
     $facturas->column_pattern('file_factura_xml', '<a href="'.URL_DOCS.'data/facturas/{file_factura_xml}" target="_new_file_factura_xml">{file_factura_xml}</a>');
 
     $facturas->change_type('monto_total', 'price', '0', array('prefix'=>'$ '));
@@ -163,7 +161,7 @@ if (isset($_GET['factura'])) {
     $detalle->label('monto_desglose','Monto del subconcepto');
 
     $detalle->field_tooltip('id_campana_aviso','Indica el nombre de la campaña o aviso institucional  a la que pertenece.');
-       $detalle->field_tooltip('id_servicio_clasificacion','Indica el nombre de la clasificación general del servicio (Servicios de difusión en medios de comunicación; Otros servicios asociados a la comunicación).');
+    $detalle->field_tooltip('id_servicio_clasificacion','Indica el nombre de la clasificación general del servicio (Servicios de difusión en medios de comunicación; Otros servicios asociados a la comunicación).');
     $detalle->field_tooltip('id_servicio_categoria','Indica el nombre de la categoría del servicio de acuerdo a su clasificación (Análisis, estudios y métricas, Cine, Impresiones, Internet, etc).');
     $detalle->field_tooltip('id_servicio_subcategoria','Indica el nombre de la subcategoría del servicio (Artículos promocionales, Cadenas radiofónicas, Carteles o posters).');
     $detalle->field_tooltip('id_servicio_unidad','Indica la unidad de medida del producto o servicio asociado a la subcategoría.');
@@ -176,7 +174,6 @@ if (isset($_GET['factura'])) {
 
     $detalle->relation('id_campana_aviso','tab_campana_aviso','id_campana_aviso','nombre_campana_aviso');
     $detalle->relation('id_so_solicitante','vso_solicitante','id_sujeto_obligado','nombre_sujeto_obligado');
-
     $detalle->relation('id_servicio_clasificacion','cat_servicios_clasificacion','id_servicio_clasificacion', 'nombre_servicio_clasificacion');
     $detalle->relation('id_servicio_categoria','cat_servicios_categorias','id_servicio_categoria','nombre_servicio_categoria',
                        'active=1', '', '', '', '', 'id_servicio_clasificacion','id_servicio_clasificacion');

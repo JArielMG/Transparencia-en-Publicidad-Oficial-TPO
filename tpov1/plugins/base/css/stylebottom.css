@@ -174,10 +174,12 @@ margin-bottom: 100px;
   border-top: 5px solid #00B5E2;
 }
 .img-footer{
+  margin:10px auto;
   display: block;
   opacity: 0.58;
 }
 .img-footer:hover{
+  margin:10px auto;
   display: block;
   opacity:  0.85;
 }
@@ -186,7 +188,6 @@ margin-bottom: 100px;
   top: 6px;
 }
 .ainstitucion{
-  padding: 60px 0 35px;
   display: block; 
   font-size: 16px;
   font-weight: bold;
@@ -204,14 +205,15 @@ margin-bottom: 100px;
 }
 .a-redes-footer {
     opacity: 0.58;
-    padding-right: 18px;
+    padding-left: 14px;
+    padding-right: 4px;
 }
 .a-redes-footer:hover {
     opacity: 0.9;
-    padding-right: 18px;
+    padding-left: 14px;
+    padding-right: 4px;
 }
 .h3interes{
-  padding: 34px 0 35px;
   display: block; 
   font-size: 16px;
   font-weight: bold;

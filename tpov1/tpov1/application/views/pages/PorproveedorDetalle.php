@@ -18,7 +18,7 @@
     $pro = Xcrud::get_instance();
     $pro->table('tab_proveedores');
     $pro->where('id_proveedor =', $id_proveedor );
-    $pro->fields("nombre_razon_social, nombre_comercial, rfc, id_personalidad_juridica, nombres, primer_apellido, segundo_apellido"); 
+    $pro->fields("nombre_razon_social, nombre_comercial, rfc, id_personalidad_juridica, nombres, primer_apellido, segundo_apellido, nota"); 
     $pro->columns("nombre_razon_social, nombre_comercial, rfc, id_personalidad_juridica"); 
     $pro->label('nombre_razon_social','Proveedor');
     $pro->label('nombre_comercial','Nombre comercial');
@@ -76,7 +76,7 @@
     $oc->label('file_orden','Archivo de la orden de compra');
     $oc->label('monto', 'Monto');
 
-    $oc->column_tooltip('id_procedimiento','ndica el tipo de procedimiento de contratación.');
+    $oc->column_tooltip('id_procedimiento','Indica el tipo de procedimiento de contratación.');
     $oc->column_tooltip('id_proveedor','Indica el nombre de la persona física o moral proveedora del producto o servicio.');
     $oc->column_tooltip('id_contrato','Clave o número de identificación único del contrato.');
     $oc->column_tooltip('id_ejercicio','Indica el año del ejercicio presupuestario.');

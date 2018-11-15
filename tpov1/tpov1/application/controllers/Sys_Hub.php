@@ -3,7 +3,7 @@
       public function __construct() {
          parent::__construct();
          $this->load->model("Tpo_model", "fechaact");
-         $this->fechaact->initialize("sec_users");
+         $this->fechaact->initialize("fecha_act");
          $this->load->model("Tpo_model", "settings");
          $this->settings->initialize("sys_settings");
    

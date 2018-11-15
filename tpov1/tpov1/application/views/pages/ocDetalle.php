@@ -33,27 +33,7 @@
     $oc->subselect('Monto','SELECT monto  FROM vmonto_oc where id_orden_compra = {id_orden_compra}'); 
 
     $oc->fields('id_ejercicio,id_trimestre,numero_orden_compra,fecha_orden,id_so_contratante,id_so_solicitante,id_proveedor,Nombre comercial del proveedor,id_procedimiento,descripcion_justificacion,
-Monto, id_campana_aviso, file_orden');
-
-/*
-Ejercicio
-Trimestre
-Clave de la orden
-Fecha
-Sujeto obligado ordenante (Con un vínculo a la página única del detalle del sujeto obligado)
-Sujeto obligado solicitante (Con un vínculo a la página única del detalle del sujeto obligado)
-Nombre o  razón social del proveedor  (Con un vínculo a la página única del detalle del proveedor)
-
-Categoría del servicio
-Categoría
-Sub Categoría
-
-Tipo de adjudicación
-Motivo de adjudicación
-Monto total
-Campaña o aviso institucional  asociado
-Vínculo al archivo .pdf o .xml de la orden de compra
-*/
+Monto, id_campana_aviso, file_orden, nota');
 
     $oc->label('id_proveedor','Proveedor');
     $oc->label('id_procedimiento','Tipo de adjudicación');
@@ -68,7 +48,6 @@ Vínculo al archivo .pdf o .xml de la orden de compra
     $oc->label('Monto','Monto total');
     $oc->label('fecha_orden','Fecha');
     $oc->label('file_orden','Vínculo al archivo .pdf o .xml de la orden de compra');
-
 
     $oc->column_tooltip('id_procedimiento','Indica el tipo de procedimiento de contratación.');
     $oc->column_tooltip('Monto','Indica el monto de la órden de compra.');
@@ -112,7 +91,7 @@ Vínculo al archivo .pdf o .xml de la orden de compra
 
     $oc->subselect('Nombre comercial del proveedor','SELECT nombre_comercial as "Nombre comercial del proveedor" FROM tab_proveedores WHERE id_proveedor = {id_proveedor}'); 
 
-    $oc->field_tooltip('id_procedimiento','ndica el tipo de procedimiento de contratación.');
+    $oc->field_tooltip('id_procedimiento','Indica el tipo de procedimiento de contratación.');
     $oc->field_tooltip('id_proveedor','Indica el nombre de la persona física o moral proveedora del producto o servicio.');
     $oc->field_tooltip('id_contrato','Clave o número de identificación único del contrato.');
     $oc->field_tooltip('id_ejercicio','Indica el año del ejercicio presupuestario.');
@@ -124,6 +103,7 @@ Vínculo al archivo .pdf o .xml de la orden de compra
     $oc->field_tooltip('descripcion_justificacion','Motivo o razones que justifican la elección del proveedor.');
     $oc->field_tooltip('fecha_orden','Fecha de la orden de compra con el formato dd/mm/aaaa (por ej. 31/12/2016)');
     $oc->field_tooltip('file_orden','Archivo electrónico de la orden de compra en formato PDF.');
+    $oc->field_tooltip('nota','Nota.');
     $oc->field_tooltip('id_servicio_clasificacion','Indica el nombre de la Categoría.');
     $oc->field_tooltip('id_servicio_categoria','Indica el nombre de la categoría del servicio.');
     $oc->field_tooltip('id_servicio_subcategoria','Indica el nombre de la subcategoría del servicio.');

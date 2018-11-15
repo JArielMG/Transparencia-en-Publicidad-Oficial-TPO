@@ -5,6 +5,7 @@
     $user_id = getD3D("user_id");
     $so_tipo = getD3D('so_tipo');
     $so_act  = getD3D('so_act');
+    $id_campana_tipo = getD3D('id_campana_tipo');
     $debug_file_name = 'V->'.basename(__FILE__, ".php").'->> '; 
     include_once(DIR_ROOT . 'xcrud/xcrud.php');
     $xcrud = Xcrud::get_instance();
@@ -91,16 +92,15 @@
     $xcrud->relation('id_campana_cobertura','cat_campana_coberturas','id_campana_cobertura','nombre_campana_cobertura');
     
     $xcrud->relation('id_campana_tipo','cat_campana_tipos','id_campana_tipo','nombre_campana_tipo');    
-
-//    $xcrud->relation('id_campana_subtipo','cat_campana_subtipos','id_campana_subtipo','nombre_campana_subtipo',
-//                     '','','','','','id_campana_tipo','id_campana_tipo');
-                     
-
+    	if ($id_campana_tipo == 1) {
+   			$xcrud->relation('id_campana_subtipo','cat_campana_subtipos','id_campana_subtipo','nombre_campana_subtipo',
+ 				array('id_campana_subtipo' == 1 ));
+		} else {
+        	$xcrud->relation('id_campana_subtipo','cat_campana_subtipos','id_campana_subtipo','nombre_campana_subtipo',
+            	array('id_campana_subtipo' == 2 ));
+    	}
     $xcrud->relation('id_campana_subtipo','cat_campana_subtipos','id_campana_subtipo','nombre_campana_subtipo' );
-
-//    $xcrud->relation('id_campana_subtipo','cat_campana_subtipos','id_campana_subtipo','nombre_campana_subtipo',
-//                     '','','','','','id_campana_tipo','id_campana_tipo');
-                     
+                  
     $xcrud->relation('id_ejercicio','cat_ejercicios','id_ejercicio','ejercicio');
     $xcrud->relation('id_campana_tema','cat_campana_temas','id_campana_tema','nombre_campana_tema');
     $xcrud->relation('id_trimestre','cat_trimestres','id_trimestre','trimestre');
@@ -113,9 +113,6 @@
        $xcrud->relation('id_so_solicitante','vso_solicitante','id_sujeto_obligado','nombre_sujeto_obligado');
     } 
     $xcrud->relation('active','sys_active','id_active','name_active');
-/*
-publicacion_segob
-*/	
 
     $xcrud->change_type('evaluacion_documento', 'file', '', array('not_rename'=>true, 'path'=>'../data/campanas/evaluacion/'));
 

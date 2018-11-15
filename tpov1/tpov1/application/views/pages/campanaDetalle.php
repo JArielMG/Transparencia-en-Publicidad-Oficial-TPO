@@ -26,7 +26,7 @@ if (isset($_GET['campana'])) {
     $xcrud->unset_add();
     $xcrud->unset_remove();
     $xcrud->unset_list();
-    $xcrud->fields('id_campana_tipo, id_campana_subtipo, nombre_campana_aviso, clave_campana, autoridad, id_ejercicio, id_trimestre, id_so_contratante, id_so_solicitante, id_campana_tema, id_campana_objetivo, objetivo_comunicacion, id_campana_cobertura, campana_ambito_geo, fecha_inicio, fecha_termino, id_tiempo_oficial, fecha_inicio_to, fecha_termino_to, publicacion_segob, plan_acs, fecha_dof, active, monto_total');
+    $xcrud->fields('id_campana_tipo, id_campana_subtipo, nombre_campana_aviso, clave_campana, autoridad, id_ejercicio, id_trimestre, id_so_contratante, id_so_solicitante, id_campana_tema, id_campana_objetivo, objetivo_comunicacion, id_campana_cobertura, campana_ambito_geo, fecha_inicio, fecha_termino, id_tiempo_oficial, fecha_inicio_to, fecha_termino_to, publicacion_segob, plan_acs, fecha_dof, active, monto_total, nota');
 
     $xcrud->subselect('monto_total','SELECT SUM(monto_desglose) FROM tab_facturas_desglose WHERE id_campana_aviso = {id_campana_aviso}');
     $xcrud->change_type('monto_total',  'price', '0', array('prefix'=>'$ ', 'decimals'=>2));
@@ -79,6 +79,7 @@ if (isset($_GET['campana'])) {
     $xcrud->field_tooltip('plan_acs','Nombre o denominación del documento del programa anual de comunicación social.');
     $xcrud->field_tooltip('fecha_dof','Fecha en la que se publicó en el Diario Oficial de la Federación, periódico o gaceta, o portal de Internet institucional correspondiente.');
     $xcrud->field_tooltip('active','Indica el estado de la información “Activa” o “Inactiva”.');
+    $xcrud->field_tooltip('nota','Nota.');
 
     $xcrud->relation('id_campana_objetivo','cat_campana_objetivos','id_campana_objetivo','campana_objetivo');
     $xcrud->relation('id_campana_cobertura','cat_campana_coberturas','id_campana_cobertura','nombre_campana_cobertura');

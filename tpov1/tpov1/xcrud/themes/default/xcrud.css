@@ -494,7 +494,7 @@ input.xcrud-inline{
     cursor: not-allowed;
 }
 .xcrud input.xcrud-input-small,.xcrud select.xcrud-input-small{
-    width: 130px;
+    width: 190px;
     min-width: 130px;
 }
 .xcrud img{

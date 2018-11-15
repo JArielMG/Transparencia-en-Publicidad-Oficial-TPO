@@ -475,6 +475,12 @@ CREATE TABLE IF NOT EXISTS `sec_users` (
   CONSTRAINT `FK_sec_users_tab_sujetos_obligados` FOREIGN KEY (`record_user`) REFERENCES `tab_sujetos_obligados` (`id_sujeto_obligado`)
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `fecha_act` (
+  `id_fecha` bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
+  `last_update` date  NULL DEFAULT NULL,
+  PRIMARY KEY (`id_fecha`)
+) DEFAULT CHARSET=utf8;
+
 -- La exportación de datos fue deseleccionada.
 
 

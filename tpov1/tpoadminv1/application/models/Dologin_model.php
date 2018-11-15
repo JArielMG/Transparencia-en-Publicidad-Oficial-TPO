@@ -24,8 +24,8 @@
       
       public function updateDate() {
          $this->db->set("last_update", "NOW()", FALSE);
-         $this->db->where("id_user", 1);
-         $this->db->update("sec_users");
+         $this->db->where("id_fecha", 1);
+         $this->db->update("fecha_act");
       }
       
       public function find1($id1, $valor1, $order)

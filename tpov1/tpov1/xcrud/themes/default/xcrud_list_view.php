@@ -22,8 +22,9 @@
             </div>
             <br />
             <?php echo $this->render_limitlist(true); ?>
+            <br>
             <div style="float: right;">
             <?php echo $this->render_pagination(); ?>
             </div>
-            
+            <br>
         </div>
