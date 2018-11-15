@@ -330,9 +330,9 @@ class Xcrud
             return self::$instance[$inst_name]->render();
         }
         else
-            self::error('<strong>The verification key is out of date</strong><br />
-                This means that your browser cached a previous version of this page with an old key (for security reasons the verification key is generated every request)<br />
-                Why? Maybe you pressed the back button in your browser or opened a bookmark from last session. <br /><strong>Just reload the page, nothing happened :)</strong>');
+            self::error('<strong>La clave de verificación está desactualizada.</strong><br />
+                Esto significa que su navegador almacenó en caché una versión anterior de esta página con una clave antigua (por razones de seguridad, la clave de verificación se genera en cada solicitud).<br />
+                ¿Por qué? Tal vez presionó el botón "atrás" en su navegador o abrió un marcador de la sesión anterior.<br /><strong> Solo se debe de recargar la página</strong>');
     }
     protected static function init_prepare($method = false)
     {
